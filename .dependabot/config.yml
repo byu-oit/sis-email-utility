@@ -13,5 +13,5 @@ update_configs:
     directory: "/"
     target_branch: dev
     update_schedule: weekly
-    default_reviers:
+    default_reviewers:
       - stuft2
