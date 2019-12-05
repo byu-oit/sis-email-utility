@@ -1,0 +1,16 @@
+# Send smallest context to the docker daemon
+**/*
+
+# Include (start each line with a bang "!"):
+
+# OpenAPI doc
+!api.yaml
+
+# NPM files
+!package*.json
+
+# TypeScript config
+!tsconfig.json
+
+# Source files
+!src

@@ -1,0 +1,17 @@
+version: 1
+update_configs:
+  - package_manager: "javascript"
+    directory: "/"
+    target_branch: dev
+    update_schedule: weekly
+    default_reviewers:
+      - stuft2
+    automerged_updates:
+      - match:
+          update_type: "semver:patch"
+  - package_manager: "docker"
+    directory: "/"
+    target_branch: dev
+    update_schedule: weekly
+    default_reviers:
+      - stuft2

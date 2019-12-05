@@ -18,6 +18,13 @@
   },
   "homepage": "https://github.com/byu-oit/aws-ses-api-utility-node#readme",
   "devDependencies": {
-    "typescript": "^3.7.2"
+    "@types/express": "^4.17.2",
+    "@types/node": "^12.12.14",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "openapi-enforcer": "^1.6.3",
+    "openapi-enforcer-middleware": "^1.1.7"
   }
 }

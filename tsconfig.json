@@ -8,6 +8,7 @@
     "removeComments": false,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "strict": true,
     "strictNullChecks": true,
     "moduleResolution": "node",

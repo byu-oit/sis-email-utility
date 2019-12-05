@@ -10,13 +10,86 @@ info:
     name: OIT Service Desk Support
     url: 'https://it.byu.edu'
     email: it@byu.edu
-paths: {}
+paths:
+  '/{user_id}/messages':
+    get:
+      summary: Your GET endpoint
+      tags:
+        - email
+        - user
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/messages'
+      operationId: getMessages
+      description: Retrieve the messages for a user
+    parameters:
+      - type: string
+        name: user_id
+        in: path
+        description: Used to resolve a user identity
+        required: true
+    post:
+      summary: Create Message Request
+      operationId: createMessageRequest
+      description: Create a new message request
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              to:
+                type: array
+                items:
+                  type: string
+              cc:
+                type: string
+              bcc:
+                type: string
+              subject:
+                type: string
+              body:
+                type: string
+          description: New message request
+      responses:
+        '201':
+          schema:
+            type: string
+            default: Created
+          headers:
+            Content-Location:
+              type: string
+              description: ''
+          description: Created
+      tags:
+        - email
+  '/{user_id}/messages/{message_id}':
+    parameters:
+      - type: string
+        name: user_id
+        in: path
+        required: true
+      - type: string
+        name: message_id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags:
+        - email
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/message'
+      operationId: getMessage
+      description: Get a message for a user
 definitions:
-  links:
+  std_links:
     description: Hypermedia links for a collection of persons
     type: object
-    x-tags:
-      - uapi
     properties:
       emails__info:
         description: Hypermedia link for the default persons collection
@@ -138,15 +211,17 @@ definitions:
           - method
           - rel
           - href
-  validation_information:
+    x-tags:
+      - std
+  std_validation_information:
     description: UAPI Validation Information
     type: array
     items:
       type: string
     additionalProperties: true
     x-tags:
-      - uapi
-  validation_response:
+      - std
+  std_validation_response:
     description: UAPI Validation Response
     type: object
     required:
@@ -159,37 +234,37 @@ definitions:
         type: string
     additionalProperties: true
     x-tags:
-      - uapi
-  simple_metadata:
+      - std
+  std_simple_metadata:
     description: UAPI Simple Metadata
     type: object
-    required:
-      - validation_response
-    properties:
-      validation_response:
-        $ref: '#/definitions/validation_response'
-      validation_information:
-        $ref: '#/definitions/validation_information'
     additionalProperties: true
     x-tags:
-      - uapi
-  collection_metadata:
+      - std
+    properties:
+      validation_response:
+        $ref: '#/definitions/std_validation_response'
+      validation_information:
+        $ref: '#/definitions/std_validation_information'
+    required:
+      - validation_response
+  std_collection_metadata:
     description: UAPI Collection Metadata
     type: object
-    required:
-      - collection_size
-      - validation_response
+    additionalProperties: true
+    x-tags:
+      - std
     properties:
       collection_size:
         type: number
       validation_response:
-        $ref: '#/definitions/validation_response'
+        $ref: '#/definitions/std_validation_response'
       validation_information:
-        $ref: '#/definitions/validation_information'
-    additionalProperties: true
-    x-tags:
-      - uapi
-  email_id:
+        $ref: '#/definitions/std_validation_information'
+    required:
+      - collection_size
+      - validation_response
+  message_id:
     description: The UUID of the email request
     type: object
     x-tags:
@@ -209,11 +284,9 @@ definitions:
       - value
       - key
       - api_type
-  identity:
+  user_id:
     description: Identity for sending and recieving messages
     type: object
-    x-tags:
-      - identity
     properties:
       value:
         type: string
@@ -223,23 +296,25 @@ definitions:
     required:
       - value
       - api_type
-  identities:
+    x-tags:
+      - user
+  user_ids:
     description: Identity list for sending and recieving messages
     type: object
     x-tags:
-      - identity
+      - user
     properties:
       value_array:
         type: array
         items:
-          $ref: '#/definitions/identity'
+          $ref: '#/definitions/user_id'
       api_type:
         type: string
         default: read-only
     required:
       - value_array
       - api_type
-  subject:
+  message_subject:
     description: The subject of the message
     type: object
     x-tags:
@@ -253,7 +328,7 @@ definitions:
     required:
       - value
       - api_type
-  body:
+  message_body:
     description: The body of the message
     type: object
     x-tags:
@@ -267,12 +342,9 @@ definitions:
     required:
       - value
       - api_type
-  email_status:
-    description: The status of the message request
+  message_status:
+    description: A message request status
     type: object
-    x-tags:
-      - email
-      - system
     properties:
       value:
         type: string
@@ -285,55 +357,41 @@ definitions:
     required:
       - value
       - api_type
-  lifecycle_item:
+    x-tags:
+      - email
+  message_lifecycle_item:
     type: object
     x-tags:
       - email
-      - system
+    description: A lifecycle marker
     properties:
       status:
-        $ref: '#/definitions/email_status'
+        $ref: '#/definitions/message_status'
       status_datetime:
         $ref: '#/definitions/std_datetime'
+      status_by_id:
+        $ref: '#/definitions/user_id'
     required:
       - status
       - status_datetime
-  lifecycle:
-    description: the status lifecycle of the message request
+      - status_by_id
+  message_lifecycle:
+    description: The lifecycle markers of the message request
     type: object
-    required:
-      - object_array
+    x-tags:
+      - email
     properties:
       object_array:
         type: array
         items:
-          $ref: '#/definitions/lifecycle_item'
-    x-tags:
-      - email
-      - system
-  std_by:
-    description: The identity that created the request
-    type: object
-    x-tags:
-      - email
-      - system
-    properties:
-      value:
-        type: string
-      api_type:
-        type: string
-        default: system
+          $ref: '#/definitions/message_lifecycle_item'
     required:
-      - value
-      - api_type
+      - object_array
   std_datetime:
     description: The date-time that the request was created
     type: object
     minItems: 1
     maxItems: 2
-    x-tags:
-      - email
-      - system
     properties:
       value:
         type: string
@@ -343,121 +401,49 @@ definitions:
     required:
       - value
       - api_type
-  email:
-    description: Email Resource
-    type: object
-    additionalProperties: true
     x-tags:
-      - email
-    properties:
-      id:
-        $ref: '#/definitions/email_id'
-      to:
-        $ref: '#/definitions/identities'
-      cc:
-        $ref: '#/definitions/identities'
-      bcc:
-        $ref: '#/definitions/identities'
-      from:
-        $ref: '#/definitions/identity'
-      subject:
-        $ref: '#/definitions/subject'
-      body:
-        $ref: '#/definitions/body'
-      lifecycle:
-        $ref: '#/definitions/lifecycle'
-      created_by:
-        $ref: '#/definitions/std_by'
-      created_datetime:
-        $ref: '#/definitions/std_datetime'
-    required:
-      - id
-      - to
-      - cc
-      - bcc
-      - from
-      - subject
-      - body
-      - lifecycle
-      - created_by
-      - created_datetime
-  email_state:
-    title: email_status
+      - std
+  message:
+    title: message
     type: object
     description: Status information for an email request
     x-tags:
       - email
     properties:
-      id:
-        $ref: '#/definitions/email_id'
-      from:
-        $ref: '#/definitions/identities'
-      subject:
-        $ref: '#/definitions/subject'
-      created_by:
-        $ref: '#/definitions/std_by'
-      created_datetime:
-        $ref: '#/definitions/std_datetime'
-      updated_by:
-        $ref: '#/definitions/std_by'
-      updated_datetime:
-        $ref: '#/definitions/std_datetime'
-      to:
-        $ref: '#/definitions/identities'
       metadata:
-        $ref: '#/definitions/simple_metadata'
-      status:
-        $ref: '#/definitions/email_status'
-    required:
-      - id
-      - from
-      - subject
-      - created_by
-      - created_datetime
-      - updated_by
-      - updated_datetime
-      - to
-      - metadata
-      - status
-  email_states:
-    title: email_states
+        $ref: '#/definitions/std_simple_metadata'
+      id:
+        $ref: '#/definitions/message_id'
+      to:
+        $ref: '#/definitions/user_ids'
+      cc:
+        $ref: '#/definitions/user_ids'
+      bcc:
+        $ref: '#/definitions/user_ids'
+      from:
+        $ref: '#/definitions/user_id'
+      subject:
+        $ref: '#/definitions/message_subject'
+      body:
+        $ref: '#/definitions/message_body'
+      lifecycle:
+        $ref: '#/definitions/message_lifecycle'
+    x-examples: {}
+  messages:
+    title: messages
     type: object
+    x-tags:
+      - email
+    description: A collection of message requests
     properties:
       links:
-        $ref: '#/definitions/links'
+        $ref: '#/definitions/std_links'
       metadata:
-        $ref: '#/definitions/collection_metadata'
+        $ref: '#/definitions/std_collection_metadata'
       values:
         type: array
         items:
-          $ref: '#/definitions/email_state'
-responses:
-  retrieve_email:
-    description: Email state response
-    schema:
-      properties:
-        metadata:
-          $ref: '#/definitions/simple_metadata'
-      allOf:
-        - $ref: '#/definitions/email'
-  retrieve_emails:
-    description: All email state response
-    schema:
-      required:
-        - metadata
-        - values
-      properties:
-        metadata:
-          $ref: '#/definitions/collection_metadata'
-        values:
-          type: array
-          items:
-            $ref: '#/definitions/email'
-  request_emails:
-    description: Request emails
-    headers:
-      Location:
-        type: string
+          $ref: '#/definitions/message'
 schemes:
   - https
 produces:
@@ -467,3 +453,10 @@ consumes:
 host: api.byu.edu
 basePath: /byuapi/utility/email
 securityDefinitions: {}
+tags:
+  - name: email
+    description: Email Utility
+  - name: std
+    description: Shared Standard
+  - name: user
+    description: User Identity
