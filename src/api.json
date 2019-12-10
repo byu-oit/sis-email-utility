@@ -192,10 +192,7 @@
         "description": "Delete a message",
         "responses": {
           "204": {
-            "description": "No Content",
-            "schema": {
-              "$ref": "#/definitions/message"
-            }
+            "description": "No Content"
           },
           "500": {
             "description": "Internal Error",

@@ -25,12 +25,11 @@ import * as auth from './auth'
     app.use(enforcer.middleware())
 
     // Start server
-    const port: number = process.env.PORT ? parseInt(process.env.PORT):8080
+    const port = process.env.PORT ? parseInt(process.env.PORT) : 8080
     app.listen(port, err => {
       if (err) console.error(err.stack)
       console.log(`Server started on port ${port}`)
     })
-
   } catch (e) {
     console.error(e)
   }
