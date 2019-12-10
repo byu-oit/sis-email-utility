@@ -1,4 +1,6 @@
-import {Model, Response} from '../types/messages'
+/*eslint @typescript-eslint/camelcase: ["error", {allow: ["api_type", "value_array", "status_by_id", "status_datetime"]}]*/
+import * as Model from '../types/messages/model'
+import * as Response from '../types/messages/response'
 import {generateCollectionMetadataResponseObj, generateValidationResponseObj} from '../util'
 
 export function formatMessage (message: Model.Message): Response.Message {

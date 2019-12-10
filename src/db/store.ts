@@ -1,4 +1,4 @@
-import {Model} from '../types/messages'
+import * as Model from '../types/messages/model'
 
 const store: Record<string, Model.Messages> = {}
 

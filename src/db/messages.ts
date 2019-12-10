@@ -1,6 +1,6 @@
-import { Model } from '../types/messages'
+import * as Model from '../types/messages/model'
 import store from './store'
-import {HTTPError} from "../util"
+import {HTTPError} from '../util'
 
 export async function getMessages(userId: string): Promise<Model.Messages> {
   return store[userId] || {}

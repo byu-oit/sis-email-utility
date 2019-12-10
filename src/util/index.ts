@@ -1,7 +1,8 @@
+/*eslint @typescript-eslint/camelcase: ["error", {allow: ["validation_response", "validation_information", "collection_size"]}]*/
 import {UAPI} from '@byu-oit/uapi-ts'
 import {Request, Response} from 'express'
 
-function getResponseForReturnCode(code: number) {
+function getResponseForReturnCode(code: number): string {
   if (code===200) return 'Success'
   if (code===201) return 'Created'
   if (code===204) return 'No Content'

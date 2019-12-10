@@ -3,15 +3,15 @@ import path from 'path'
 import Enforcer from 'openapi-enforcer-middleware'
 import * as auth from './auth'
 
-(async () => {
-  const app = express()
-  app.use(express.json())
-
-  const controllerDir = path.resolve(__dirname, 'controllers')
-  const oasPath = path.resolve(__dirname, 'api.json')
-
-  const enforcer = new Enforcer(oasPath)
+(async (): Promise<void> => {
   try {
+    const app = express()
+    app.use(express.json())
+
+    const controllerDir = path.resolve(__dirname, 'controllers')
+    const oasPath = path.resolve(__dirname, 'api.json')
+
+    const enforcer = new Enforcer(oasPath)
     // Wait for enforcer to resolve OAS doc
     await enforcer.promise
 
@@ -25,7 +25,7 @@ import * as auth from './auth'
     app.use(enforcer.middleware())
 
     // Start server
-    const port: number = process.env.PORT ? parseInt(process.env.PORT) : 8080
+    const port: number = process.env.PORT ? parseInt(process.env.PORT):8080
     app.listen(port, err => {
       if (err) console.error(err.stack)
       console.log(`Server started on port ${port}`)
