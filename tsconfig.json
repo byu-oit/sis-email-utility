@@ -1,25 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es2017",
+    "target": "esnext",
     "module": "commonjs",
     "sourceMap": true,
     "allowJs": false,
     "declaration": true,
     "removeComments": false,
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
     "strict": true,
     "strictNullChecks": true,
     "moduleResolution": "node",
-    "lib": [
-      "es7",
-      "es2017.object"
-    ],
-    "outDir": "dist"
+    "outDir": "dist",
+    "lib": ["esnext"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true
   },
   "include": [
-    "lib/**/*"
+    "src/**/*"
   ],
   "compileOnSave": false
 }

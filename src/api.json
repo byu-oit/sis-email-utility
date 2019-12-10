@@ -1,0 +1,688 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Email Utility",
+    "description": "Email Utility for use by University developers",
+    "license": {
+      "name": "Apache-2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "contact": {
+      "name": "OIT Service Desk Support",
+      "url": "https://it.byu.edu",
+      "email": "it@byu.edu"
+    }
+  },
+  "paths": {
+    "/messages": {
+      "x-controller": "messages",
+      "get": {
+        "x-operation": "getMessages",
+        "operationId": "getMessages",
+        "summary": "Get messages",
+        "description": "Get messages",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/messages"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "$ref": "#/definitions/std_simple_metadata"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "$ref": "#/definitions/std_simple_metadata"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "email",
+          "user"
+        ]
+      },
+      "post": {
+        "x-operation": "sendMessage",
+        "operationId": "sendMessage",
+        "summary": "Send message",
+        "description": "Send message",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "to": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "cc": {
+                  "type": "string"
+                },
+                "bcc": {
+                  "type": "string"
+                },
+                "subject": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "New message request"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "type": "string",
+              "default": "Created",
+              "enum": [
+                "Created"
+              ]
+            },
+            "headers": {
+              "location": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "$ref": "#/definitions/std_simple_metadata"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "$ref": "#/definitions/std_simple_metadata"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "email"
+        ]
+      }
+    },
+    "/messages/{message_id}": {
+      "x-controller": "messages",
+      "parameters": [
+        {
+          "type": "string",
+          "name": "message_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "x-operation": "getMessage",
+        "operationId": "getMessage",
+        "summary": "Get a message",
+        "description": "Get a message",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "$ref": "#/definitions/std_simple_metadata"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "$ref": "#/definitions/std_simple_metadata"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "email"
+        ]
+      },
+      "delete": {
+        "x-operation": "deleteMessage",
+        "operationId": "deleteMessage",
+        "summary": "Delete a message",
+        "description": "Delete a message",
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "$ref": "#/definitions/std_simple_metadata"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "email"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "std_links": {
+      "description": "Hypermedia links for a collection of persons",
+      "type": "object",
+      "x-tags": [
+        "std"
+      ],
+      "properties": {
+        "emails__info": {
+          "description": "Hypermedia link for the default persons collection",
+          "type": "object",
+          "properties": {
+            "method": {
+              "default": "GET",
+              "enum": [
+                "GET"
+              ],
+              "type": "string"
+            },
+            "rel": {
+              "type": "string"
+            },
+            "href": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "rel",
+            "href"
+          ]
+        },
+        "emails__first": {
+          "description": "Hypermedia link for the persons collection at the first page",
+          "type": "object",
+          "properties": {
+            "method": {
+              "default": "GET",
+              "enum": [
+                "GET"
+              ],
+              "type": "string"
+            },
+            "rel": {
+              "type": "string"
+            },
+            "href": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "rel",
+            "href"
+          ]
+        },
+        "emails__next": {
+          "description": "Hypermedia links format",
+          "x-variable": "persons__next",
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "default": "GET",
+              "enum": [
+                "GET"
+              ]
+            },
+            "rel": {
+              "type": "string"
+            },
+            "href": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "rel",
+            "href"
+          ]
+        },
+        "emails__last": {
+          "description": "Hypermedia links format",
+          "type": "object",
+          "properties": {
+            "method": {
+              "default": "GET",
+              "enum": [
+                "GET"
+              ],
+              "type": "string"
+            },
+            "rel": {
+              "type": "string"
+            },
+            "href": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "rel",
+            "href"
+          ]
+        },
+        "emails__create": {
+          "description": "Hypermedia links format",
+          "type": "object",
+          "properties": {
+            "method": {
+              "default": "POST",
+              "enum": [
+                "POST"
+              ],
+              "type": "string"
+            },
+            "rel": {
+              "type": "string"
+            },
+            "href": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "rel",
+            "href"
+          ]
+        },
+        "emails__prev": {
+          "description": "Hypermedia links format",
+          "x-variable": "persons__prev",
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "default": "GET",
+              "enum": [
+                "GET"
+              ]
+            },
+            "rel": {
+              "type": "string"
+            },
+            "href": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "rel",
+            "href"
+          ]
+        }
+      }
+    },
+    "std_validation_information": {
+      "description": "UAPI Validation Information",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "x-tags": [
+        "std"
+      ]
+    },
+    "std_validation_response": {
+      "description": "UAPI Validation Response",
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "number"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "x-tags": [
+        "std"
+      ]
+    },
+    "std_simple_metadata": {
+      "description": "UAPI Simple Metadata",
+      "type": "object",
+      "required": [
+        "validation_response"
+      ],
+      "x-tags": [
+        "std"
+      ],
+      "properties": {
+        "validation_response": {
+          "$ref": "#/definitions/std_validation_response"
+        },
+        "validation_information": {
+          "$ref": "#/definitions/std_validation_information"
+        }
+      }
+    },
+    "std_collection_metadata": {
+      "description": "UAPI Collection Metadata",
+      "type": "object",
+      "x-tags": [
+        "std"
+      ],
+      "required": [
+        "collection_size",
+        "validation_response"
+      ],
+      "properties": {
+        "collection_size": {
+          "type": "number"
+        },
+        "validation_response": {
+          "$ref": "#/definitions/std_validation_response"
+        },
+        "validation_information": {
+          "$ref": "#/definitions/std_validation_information"
+        }
+      }
+    },
+    "message_id": {
+      "description": "The UUID of the email request",
+      "type": "object",
+      "x-tags": [
+        "email"
+      ],
+      "properties": {
+        "value": {
+          "type": "string",
+          "example": "e4af5468-53d4-4389-acc6-e6fc371dce6e"
+        },
+        "key": {
+          "type": "boolean",
+          "default": true
+        },
+        "api_type": {
+          "type": "string",
+          "default": "system"
+        }
+      },
+      "required": [
+        "value",
+        "key",
+        "api_type"
+      ]
+    },
+    "user_id": {
+      "description": "Identity for sending and recieving messages",
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "api_type": {
+          "type": "string",
+          "default": "read-only"
+        }
+      },
+      "required": [
+        "value",
+        "api_type"
+      ],
+      "x-tags": [
+        "user"
+      ]
+    },
+    "user_ids": {
+      "description": "Identity list for sending and recieving messages",
+      "type": "object",
+      "x-tags": [
+        "user"
+      ],
+      "properties": {
+        "value_array": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/user_id"
+          }
+        },
+        "api_type": {
+          "type": "string",
+          "default": "read-only"
+        }
+      },
+      "required": [
+        "value_array",
+        "api_type"
+      ]
+    },
+    "message_subject": {
+      "description": "The subject of the message",
+      "type": "object",
+      "x-tags": [
+        "email"
+      ],
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "api_type": {
+          "type": "string",
+          "default": "read-only"
+        }
+      },
+      "required": [
+        "value",
+        "api_type"
+      ]
+    },
+    "message_body": {
+      "description": "The body of the message",
+      "type": "object",
+      "x-tags": [
+        "email"
+      ],
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "api_type": {
+          "type": "string",
+          "default": "read-only"
+        }
+      },
+      "required": [
+        "value",
+        "api_type"
+      ]
+    },
+    "message_status": {
+      "description": "A message request status",
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "enum": [
+            "archived",
+            "deleted",
+            "sent"
+          ]
+        },
+        "api_type": {
+          "type": "string",
+          "default": "system"
+        }
+      },
+      "required": [
+        "value",
+        "api_type"
+      ],
+      "x-tags": [
+        "email"
+      ]
+    },
+    "std_datetime": {
+      "description": "The date-time that the request was created",
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "api_type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "api_type"
+      ],
+      "x-tags": [
+        "std"
+      ]
+    },
+    "message": {
+      "title": "message",
+      "type": "object",
+      "description": "Status information for an email request",
+      "x-tags": [
+        "email"
+      ],
+      "properties": {
+        "metadata": {
+          "$ref": "#/definitions/std_simple_metadata"
+        },
+        "id": {
+          "$ref": "#/definitions/message_id"
+        },
+        "to": {
+          "$ref": "#/definitions/user_ids"
+        },
+        "cc": {
+          "$ref": "#/definitions/user_ids"
+        },
+        "bcc": {
+          "$ref": "#/definitions/user_ids"
+        },
+        "from": {
+          "$ref": "#/definitions/user_id"
+        },
+        "subject": {
+          "$ref": "#/definitions/message_subject"
+        },
+        "body": {
+          "$ref": "#/definitions/message_body"
+        },
+        "status": {
+          "$ref": "#/definitions/message_status"
+        },
+        "status_datetime": {
+          "$ref": "#/definitions/std_datetime"
+        },
+        "status_by_id": {
+          "$ref": "#/definitions/user_id"
+        }
+      }
+    },
+    "messages": {
+      "title": "messages",
+      "type": "object",
+      "x-tags": [
+        "email"
+      ],
+      "description": "A collection of message requests",
+      "properties": {
+        "links": {
+          "$ref": "#/definitions/std_links"
+        },
+        "metadata": {
+          "$ref": "#/definitions/std_collection_metadata"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/message"
+          }
+        }
+      }
+    }
+  },
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "host": "api.byu.edu",
+  "basePath": "/byuapi/utility/email",
+  "securityDefinitions": {},
+  "tags": [
+    {
+      "name": "email",
+      "description": "Email Utility"
+    },
+    {
+      "name": "std",
+      "description": "Shared Standard"
+    },
+    {
+      "name": "user",
+      "description": "User Identity"
+    }
+  ]
+}

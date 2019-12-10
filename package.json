@@ -4,8 +4,11 @@
   "description": "AWS SES UAPI Utility",
   "main": "server.js",
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "del dist && tsc && cpy src/api.json dist/",
+    "lint": "eslint . --ext .ts --fix src/",
+    "test": "ts-mocha -p tsconfig.json test/**/*.ts",
+    "dev": "ts-node src/server.ts",
+    "start": "node dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -18,13 +21,32 @@
   },
   "homepage": "https://github.com/byu-oit/aws-ses-api-utility-node#readme",
   "devDependencies": {
+    "@byu-oit/uapi-ts": "^0.0.5",
+    "@types/chai": "^4.2.6",
+    "@types/debug": "^4.1.5",
     "@types/express": "^4.17.2",
+    "@types/lodash.get": "^4.4.6",
+    "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.14",
+    "@types/uuid": "^3.4.6",
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
+    "@typescript-eslint/parser": "^2.10.0",
+    "chai": "^4.2.0",
+    "cpy-cli": "^3.0.0",
+    "del-cli": "^3.0.0",
+    "eslint": "^6.7.2",
+    "mocha": "^5.1.1",
+    "prettier": "^1.19.1",
+    "ts-mocha": "^6.0.0",
     "typescript": "^3.7.3"
   },
   "dependencies": {
+    "@byu-oit/uapi-paginate-nodejs": "^2.0.2",
+    "debug": "^4.1.1",
     "express": "^4.17.1",
+    "lodash.get": "^4.4.2",
     "openapi-enforcer": "^1.6.3",
-    "openapi-enforcer-middleware": "^1.1.7"
+    "openapi-enforcer-middleware": "^1.1.7",
+    "uuid": "^3.3.3"
   }
 }
