@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@byu-oit/uapi-paginate-nodejs": "^2.0.2",
+    "aws-sdk": "^2.587.0",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "lodash.get": "^4.4.2",
