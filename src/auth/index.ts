@@ -1,18 +1,19 @@
 import { Request, Response, NextFunction} from 'express'
+import {generateMetadataResponseObj, HttpStatus} from '../util/uapi'
 import debug from 'debug'
-import {HTTPError} from '../util'
-const log = debug('authorization:middleware')
+const logger = debug('email-utility:authorization')
 
-type MiddlewareFunction = (req: Request, res: Response, next: NextFunction) => void
+type MiddlewareFunction = (req: Request, res: Response, next: NextFunction) => any
 
-function authorized(): boolean {
-  log('Implement authorization middleware!')
+async function authorize(): Promise<boolean> {
+  logger('Implement authorization middleware!')
   return true
 }
 
 export function middleware (): MiddlewareFunction {
-  return (req: Request, res: Response, next: NextFunction): void => {
-    if (!authorized()) throw new HTTPError(403, 'User not authorized')
+  return async (req, res, next): Promise<any> => {
+    const authorized = await authorize()
+    if (!authorized) return res.status(HttpStatus.UNAUTHORIZED).send(generateMetadataResponseObj(HttpStatus.UNAUTHORIZED))
     next()
   }
 }

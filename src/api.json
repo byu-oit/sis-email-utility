@@ -17,46 +17,6 @@
   "paths": {
     "/messages": {
       "x-controller": "messages",
-      "get": {
-        "x-operation": "getMessages",
-        "operationId": "getMessages",
-        "summary": "Get messages",
-        "description": "Get messages",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/messages"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "metadata": {
-                  "$ref": "#/definitions/std_simple_metadata"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "metadata": {
-                  "$ref": "#/definitions/std_simple_metadata"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "email",
-          "user"
-        ]
-      },
       "post": {
         "x-operation": "sendMessage",
         "operationId": "sendMessage",
@@ -118,81 +78,6 @@
                 }
               }
             }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "metadata": {
-                  "$ref": "#/definitions/std_simple_metadata"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "email"
-        ]
-      }
-    },
-    "/messages/{message_id}": {
-      "x-controller": "messages",
-      "parameters": [
-        {
-          "type": "string",
-          "name": "message_id",
-          "in": "path",
-          "required": true
-        }
-      ],
-      "get": {
-        "x-operation": "getMessage",
-        "operationId": "getMessage",
-        "summary": "Get a message",
-        "description": "Get a message",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/message"
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "metadata": {
-                  "$ref": "#/definitions/std_simple_metadata"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Error",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "metadata": {
-                  "$ref": "#/definitions/std_simple_metadata"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "email"
-        ]
-      },
-      "delete": {
-        "x-operation": "deleteMessage",
-        "operationId": "deleteMessage",
-        "summary": "Delete a message",
-        "description": "Delete a message",
-        "responses": {
-          "204": {
-            "description": "No Content"
           },
           "500": {
             "description": "Internal Error",

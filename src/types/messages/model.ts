@@ -14,3 +14,19 @@ export interface Message {
 export interface Messages {
   [id: string]: Message
 }
+
+export interface SimpleMessage {
+  id: string
+  from: string
+  subject: string
+  timestamp: string
+}
+
+export interface MessageList {
+  [id: string]: SimpleMessage
+}
+
+export interface Validation<T> {
+  value: T
+  errors?: string[]
+}

@@ -5,3 +5,5 @@ export interface NewMessage {
   subject?: string
   body?: string
 }
+
+export type Category = 'sent' | 'archive' | 'inbox'

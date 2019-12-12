@@ -4,7 +4,7 @@
   "description": "AWS SES UAPI Utility",
   "main": "server.js",
   "scripts": {
-    "build": "del dist && tsc && cpy src/api.json dist/",
+    "build": "del dist && tsc",
     "lint": "eslint . --ext .ts --fix src/",
     "test": "ts-mocha -p tsconfig.json test/**/*.ts",
     "dev": "ts-node src/server.ts",
@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@byu-oit/uapi-paginate-nodejs": "^2.0.2",
-    "aws-sdk": "^2.587.0",
+    "aws-sdk": "^2.588.0",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "lodash.get": "^4.4.2",

@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import Enforcer from 'openapi-enforcer-middleware'
 import * as auth from './auth'
+import {ensureS3ResourcesExist} from './s3/common'
 
 (async (): Promise<void> => {
   try {
@@ -23,6 +24,9 @@ import * as auth from './auth'
 
     // Plugin enforcer middleware to Express
     app.use(enforcer.middleware())
+
+    // Ensure AWS resources exist
+    await ensureS3ResourcesExist()
 
     // Start server
     const port = process.env.PORT ? parseInt(process.env.PORT) : 8080
