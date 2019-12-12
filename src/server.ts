@@ -3,6 +3,7 @@ import path from 'path'
 import Enforcer from 'openapi-enforcer-middleware'
 import * as auth from './auth'
 import {ensureS3ResourcesExist} from './s3/common'
+import {checkEmailIdentityExists} from './ses/common'
 
 (async (): Promise<void> => {
   try {
@@ -27,6 +28,7 @@ import {ensureS3ResourcesExist} from './s3/common'
 
     // Ensure AWS resources exist
     await ensureS3ResourcesExist()
+    await checkEmailIdentityExists()
 
     // Start server
     const port = process.env.PORT ? parseInt(process.env.PORT) : 8080
