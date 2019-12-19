@@ -1,1 +1,1 @@
-aws-ses-api-utility-node
+sis-email-utility-api
