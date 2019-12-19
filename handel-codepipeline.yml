@@ -1,0 +1,34 @@
+version: 1
+
+name: byuapi-students-v2
+
+pipelines:
+  dev: # dev-oit-byu
+    phases:
+    - type: github
+      name: Github
+      owner: byu-oit
+      repo: byuapi-students-v2
+      branch: master
+    - type: codebuild
+      name: Build
+      build_image: aws/codebuild/standard:2.0
+    - type: handel
+      name: DevDeploy
+      environments_to_deploy:
+      - dev
+  prd: # prd-sim-appdev-oit-byu
+    phases:
+    - type: github
+      name: Github
+      owner: byu-oit
+      repo: byuapi-students-v2
+      branch: release
+    - type: codebuild
+      name: Build
+      build_image: aws/codebuild/standard:2.0
+    - type: handel
+      name: Deploy
+      environments_to_deploy:
+      - prd
+# https://handel-codepipeline.readthedocs.io

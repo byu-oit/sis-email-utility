@@ -1,8 +1,8 @@
 {
-  "name": "aws-ses-uapi-utility-node",
+  "name": "byuapi-email-utility",
   "version": "1.0.0",
-  "description": "AWS SES UAPI Utility",
-  "main": "server.js",
+  "description": "BYU API Email Utility",
+  "main": "src/server.js",
   "scripts": {
     "build": "del dist && tsc",
     "lint": "eslint . --ext .ts --fix src/",

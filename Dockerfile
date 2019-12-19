@@ -46,6 +46,7 @@ COPY --from=unittest /noop /
 # Note that test is basically identical to base, except that it requires that all tests pass
 FROM test AS release
 ENV NODE_ENV="production"
+ENV PORT="3000"
 EXPOSE 3000
 USER node
 CMD ["node", "index.js"]

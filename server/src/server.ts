@@ -36,7 +36,7 @@ import {getParams} from './util/parameters'
     await getParams()
 
     // Start server
-    const port = process.env.PORT ? parseInt(process.env.PORT) : 8080
+    const port = process.env.PORT ? parseInt(process.env.PORT) : 3000
     app.listen(port, err => {
       if (err) console.error(err.stack)
       console.log(`Server started on port ${port}`)

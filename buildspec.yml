@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions: # https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html#runtime-versions-buildspec-file
+        nodejs: 10
+        docker: 18
+    commands:
+      - docker --version && node --version && npm --version
+      - DOCKER_REPO_NAME=$HANDEL_APP_NAME-server
+      - API_IMAGE_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$DOCKER_REPO_NAME:$HANDEL_PIPELINE_NAME
+      - chmod u+x ecr/*.sh
+  pre_build:
+    commands:
+      - $(aws ecr get-login --no-include-email --region $AWS_REGION)
+      - ecr/create-repo-if-missing.sh $DOCKER_REPO_NAME ecr/access-policy.json ecr/lifecycle-policy.json
+      - npm i -g handel && handel check
+  build:
+    commands:
+      - DOCKER_BUILDKIT=1 docker build . -t $API_IMAGE_NAME
+  post_build:
+    commands:
+      - docker push $API_IMAGE_NAME
+artifacts:
+  files:
+    - handel.yml # Needed for the next pipeline phase (the handel deploy)
+cache:
+  paths:
+    - '/root/.npm/**/*'

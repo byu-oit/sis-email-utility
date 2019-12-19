@@ -1,0 +1,69 @@
+version: 1
+
+name: byuapi-email-utility
+
+tags:
+  team: AD-Academic Information Management
+  data-sensitivity: confidential
+
+environments:
+  stg:
+    server:
+      type: ecs-fargate
+      max_mb: 2048
+      cpu_units: 1024
+      auto_scaling:
+        min_tasks: 2
+        max_tasks: 2
+      load_balancer:
+        type: https
+        https_certificate: bfd9f3aa-9757-42ea-af88-4565f49a2de6
+        dns_names:
+        - byuapi-email-utility.sim-dev.byu.edu
+        health_check_grace_period: 20
+      containers:
+      - name: server
+        image_name: "<account>/byuapi-email-utility-server:stg"
+        port_mappings:
+        - 3000
+        routing:
+          base_path: /
+          health_check_path: /xhealth
+
+  prd:
+    server:
+      type: ecs-fargate
+      max_mb: 2048
+      cpu_units: 1024
+      auto_scaling:
+        min_tasks: 2
+        max_tasks: 8
+        scaling_policies:
+        - type: up
+          adjustment:
+            value: 1
+          alarm:
+            metric_name: MemoryUtilization
+            comparison_operator: GreaterThanThreshold
+            threshold: 70
+        - type: down
+          adjustment:
+            value: 1
+          alarm:
+            metric_name: MemoryUtilization
+            comparison_operator: LessThanThreshold
+            threshold: 30
+      load_balancer:
+        type: https
+        https_certificate: bfd9f3aa-9757-42ea-af88-4565f49a2de6
+        dns_names:
+        - byuapi-email-utility.sim.byu.edu
+        health_check_grace_period: 20
+      containers:
+      - name: server
+        image_name: "<account>/byuapi-email-utility-server:prd"
+        port_mappings:
+        - 3000
+        routing:
+          base_path: /
+          health_check_path: /xhealth

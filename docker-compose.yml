@@ -1,0 +1,10 @@
+version: '3'
+services:
+  server:
+    build: .
+    ports:
+    - "3000:3000"
+    volumes:
+    - ~/.aws:/home/node/.aws # Use AWS credentials from host
+    environment:
+      NODE_ENV: development
