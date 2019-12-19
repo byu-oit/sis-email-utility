@@ -9,7 +9,7 @@ const s3 = new AWS.S3({apiVersion: '2006-03-01', region: 'us-west-2'})
 const bucketListCache = Cache<ListBucketsOutput>()
 const objectListCache = Cache<ListObjectsOutput>()
 
-export const Bucket = 'sim-email-utility'
+export const Bucket = `sim-email-utility-${process.env.NODE_ENV || 'development'}`
 const NoReplyUserName = 'no-reply'
 
 export async function retrieveObject(target: string, id: string): Promise<GetObjectOutput> {
