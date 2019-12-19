@@ -5,7 +5,7 @@ import {PersonInfo} from '../types/messages/model'
 
 async function deliverMessage(category: Category, personInfo: PersonInfo, message: Model.Message): Promise<void> {
   // Ensure that the user exists
-  await ensureUserExists(personInfo.netId)
+  await ensureUserExists(personInfo.byuId)
 
   // Simplify the message
   const newSimpleMessage: Model.SimpleMessage = {
@@ -20,7 +20,7 @@ async function deliverMessage(category: Category, personInfo: PersonInfo, messag
   for (const box of ['sent', 'archive', 'inbox']) {
     let updated = false
     // Get the box files
-    const targetObject = await retrieveObject(personInfo.netId, `${box}`)
+    const targetObject = await retrieveObject(personInfo.byuId, `${box}`)
     email[box] = JSON.parse(targetObject.Body as string) as Model.MessageList
 
     // Add/Remove message to/from box:
@@ -38,7 +38,7 @@ async function deliverMessage(category: Category, personInfo: PersonInfo, messag
     }
 
     // Save the changes to the box file if it has been updated
-    if (updated) await storeObject(personInfo.netId, category, email[box], 'STANDARD')
+    if (updated) await storeObject(personInfo.byuId, category, email[box], 'STANDARD')
   }
 }
 
