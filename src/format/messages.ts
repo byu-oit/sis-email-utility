@@ -13,27 +13,27 @@ export function formatMessage (message: Model.Message): Response.Message {
     },
     to: {
       value_array: message.to.map(v => ({
-        value: v,
+        value: v.byuId,
         api_type: 'read-only'
       })),
       api_type: 'read-only'
     },
     cc: {
       value_array: message.cc.map(v => ({
-        value: v,
+        value: v.byuId,
         api_type: 'read-only'
       })),
       api_type: 'read-only'
     },
     bcc: {
       value_array: message.bcc.map(v => ({
-        value: v,
+        value: v.byuId,
         api_type: 'read-only'
       })),
       api_type: 'read-only'
     },
     from: {
-      value: message.from,
+      value: message.from.byuId,
       api_type: 'system'
     },
     subject: {

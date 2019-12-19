@@ -1,10 +1,11 @@
 import * as Model from '../types/messages/model'
 import {ensureUserExists, removeObject, retrieveObject, storeObject} from './common'
 import {Category} from '../types/messages/request'
+import {PersonInfo} from '../types/messages/model'
 
-async function deliverMessage(category: Category, userId: string, message: Model.Message): Promise<void> {
+async function deliverMessage(category: Category, personInfo: PersonInfo, message: Model.Message): Promise<void> {
   // Ensure that the user exists
-  await ensureUserExists(userId)
+  await ensureUserExists(personInfo.netId)
 
   // Simplify the message
   const newSimpleMessage: Model.SimpleMessage = {
@@ -19,7 +20,7 @@ async function deliverMessage(category: Category, userId: string, message: Model
   for (const box of ['sent', 'archive', 'inbox']) {
     let updated = false
     // Get the box files
-    const targetObject = await retrieveObject(userId, `${box}`)
+    const targetObject = await retrieveObject(personInfo.netId, `${box}`)
     email[box] = JSON.parse(targetObject.Body as string) as Model.MessageList
 
     // Add/Remove message to/from box:
@@ -28,16 +29,16 @@ async function deliverMessage(category: Category, userId: string, message: Model
     // This ensures that sent messages are delivered properly and that a message is not inboxed and archived
     // simultaneously.
     if (box===category) {
-      email[box] = {[message.id]: newSimpleMessage, ...email.box}
+      email[box] = {...email[box], [message.id]: newSimpleMessage, ...email.box} // Merge target and new object
       updated = true
     }
     else if (category !== 'sent' && email[box].hasOwnProperty(message.id)) {
-      delete email[box][message.id]
+      delete email[box][message.id] // Remove object
       updated = true
     }
 
     // Save the changes to the box file if it has been updated
-    if (updated) await storeObject(userId, category, email[box], 'STANDARD')
+    if (updated) await storeObject(personInfo.netId, category, email[box], 'STANDARD')
   }
 }
 
@@ -67,7 +68,7 @@ export async function getMessages(userId: string, category: Category): Promise<M
   return messageObjects.reduce((agg, cur) => ({...agg, [cur.id]: cur}), {})
 }
 
-export async function sendMessage(message: Model.Message): Promise<void> {
+export async function storeMessage(message: Model.Message): Promise<void> {
   // Store message object
   await storeObject('__email', message.id, message)
 

@@ -1,9 +1,18 @@
+export interface PersonInfo {
+  firstName: string
+  surname: string
+  byuId: string
+  netId: string
+  personId: string
+  email: string
+}
+
 export interface Message {
   id: string
-  to: string[]
-  cc: string[]
-  bcc: string[]
-  from: string
+  to: PersonInfo[]
+  cc: PersonInfo[]
+  bcc: PersonInfo[]
+  from: PersonInfo
   subject: string
   body: string
   status: string
@@ -17,7 +26,7 @@ export interface Messages {
 
 export interface SimpleMessage {
   id: string
-  from: string
+  from: PersonInfo
   subject: string
   timestamp: string
 }
@@ -28,5 +37,5 @@ export interface MessageList {
 
 export interface Validation<T> {
   value: T
-  errors?: string[]
+  errors: string[]
 }

@@ -1,9 +1,11 @@
 import express from 'express'
 import path from 'path'
 import Enforcer from 'openapi-enforcer-middleware'
-import * as auth from './auth'
+import ByuJwt from '../../byu-jwt-nodejs'
+import * as authorize from './auth'
 import {ensureS3ResourcesExist} from './s3/common'
-import {checkEmailIdentityExists} from './ses/common'
+import {checkDomainIdentityExists} from './ses/common'
+import {getParams} from './util/parameters'
 
 (async (): Promise<void> => {
   try {
@@ -13,22 +15,25 @@ import {checkEmailIdentityExists} from './ses/common'
     const controllerDir = path.resolve(__dirname, 'controllers')
     const oasPath = path.resolve(__dirname, 'api.json')
 
-    const enforcer = new Enforcer(oasPath)
     // Wait for enforcer to resolve OAS doc
+    const enforcer = new Enforcer(oasPath)
     await enforcer.promise
 
     // Init controllers
     enforcer.controllers(controllerDir)
 
     // Plugin auth middleware to Express
-    app.use(auth.middleware())
+    const byuJwt = ByuJwt({development: process.env.NODE_ENV === 'development'})
+    app.use(byuJwt.authenticateUAPIMiddleware)
+    app.use(authorize.middleware())
 
     // Plugin enforcer middleware to Express
     app.use(enforcer.middleware())
 
     // Ensure AWS resources exist
     await ensureS3ResourcesExist()
-    await checkEmailIdentityExists()
+    await checkDomainIdentityExists('byu.edu')
+    await getParams()
 
     // Start server
     const port = process.env.PORT ? parseInt(process.env.PORT) : 8080
