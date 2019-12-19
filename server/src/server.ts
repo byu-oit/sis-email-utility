@@ -1,7 +1,7 @@
 import express from 'express'
 import path from 'path'
 import Enforcer from 'openapi-enforcer-middleware'
-import ByuJwt from '../../byu-jwt-nodejs'
+import ByuJwt from 'byu-jwt'
 import * as authorize from './auth'
 import {ensureS3ResourcesExist} from './s3/common'
 import {checkDomainIdentityExists} from './ses/common'
@@ -20,7 +20,7 @@ import {getParams} from './util/parameters'
     await enforcer.promise
 
     // Init controllers
-    enforcer.controllers(controllerDir)
+    await enforcer.controllers(controllerDir)
 
     // Plugin auth middleware to Express
     const byuJwt = ByuJwt({development: process.env.NODE_ENV === 'development'})
