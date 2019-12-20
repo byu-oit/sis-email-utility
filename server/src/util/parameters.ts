@@ -11,6 +11,7 @@ type GetParamsResult = { found: ParametersFound; missing: ParametersMissing }
 export let params: ParametersFound
 
 const expectedParams = [
+  'EMAIL_BUCKET_NAME',
   'CLIENT_KEY',
   'CLIENT_SECRET'
 ]
