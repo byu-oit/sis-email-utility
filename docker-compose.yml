@@ -1,7 +1,10 @@
 version: '3'
 services:
   server:
-    build: .
+    build:
+      context: .
+      args:
+      - progress=plain
     ports:
     - "3000:3000"
     volumes:

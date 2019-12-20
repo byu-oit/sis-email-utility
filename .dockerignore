@@ -4,13 +4,19 @@
 # Include (start each line with a bang "!"):
 
 # OpenAPI doc
-!api.yaml
+!server/src/api.json
 
 # NPM files
-!package*.json
+!server/package*.json
 
 # TypeScript config
-!tsconfig.json
+!server/tsconfig.json
+
+# ES lint config
+!server/.eslint*
 
 # Source files
-!src
+!server/src
+
+# Test files
+!server/test

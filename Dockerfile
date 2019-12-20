@@ -14,11 +14,12 @@ WORKDIR /opt/app
 COPY server/package*.json ./
 RUN npm --production install
 
-# Add files needed to run server
-COPY server/src ./src
-
+# Add files needed to test/build server
 FROM base AS testfiles
 COPY server/test/ ./test/
+COPY server/.eslint* ./
+COPY server/tsconfig.json ./
+COPY server/src ./src
 RUN npm install
 
 FROM testfiles AS audit
@@ -37,18 +38,22 @@ RUN npm run lint
 FROM testfiles AS unittest
 RUN npm run test
 
+FROM testfiles AS build
+RUN npm run build
+
 # You can target this stage to check that all the tests pass
 FROM base as test
 COPY --from=audit /noop /
 COPY --from=lint /noop /
 COPY --from=unittest /noop /
+COPY --from=build /opt/app/dist/ /opt/app/src/api.json /opt/app/dist/
 
-# Note that test is basically identical to base, except that it requires that all tests pass
+# Note that test is basically identical to build, except that it requires that all tests pass
 FROM test AS release
 ENV NODE_ENV="production"
 ENV PORT="3000"
 EXPOSE 3000
 USER node
-CMD ["node", "index.js"]
+CMD ["npm", "start"]
 
 # https://docs.docker.com/engine/reference/builder/

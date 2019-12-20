@@ -8,6 +8,23 @@ tags:
 
 environments:
   stg:
+    store:
+      type: s3
+      logging: enabled
+    bus:
+      type: sns
+      event_consumers:
+        - service_name: mailer
+    mailer:
+      type: lambda
+      path_to_code: ./mailer
+      handler: index.handler
+      runtime: nodejs12
+      description: Mailer daemon for BYU API email utility
+      memory: 1024
+      timeout: 10
+      dependencies:
+        - store
     server:
       type: ecs-fargate
       max_mb: 2048
@@ -29,8 +46,28 @@ environments:
         routing:
           base_path: /
           health_check_path: /xhealth
+      dependencies:
+        - bus
+        - store
 
   prd:
+    store:
+      type: s3
+      logging: enabled
+    bus:
+      type: sns
+      event_consumers:
+        - service_name: mailer
+    mailer:
+      type: lambda
+      path_to_code: ./mailer
+      handler: index.handler
+      runtime: nodejs12
+      description: Mailer daemon for BYU API email utility
+      memory: 1024
+      timeout: 10
+      dependencies:
+          - store
     server:
       type: ecs-fargate
       max_mb: 2048
@@ -67,3 +104,6 @@ environments:
         routing:
           base_path: /
           health_check_path: /xhealth
+      dependencies:
+        - bus
+        - store
