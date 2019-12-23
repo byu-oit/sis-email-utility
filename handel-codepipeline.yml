@@ -8,7 +8,7 @@ pipelines:
     - type: github
       name: Github
       owner: byu-oit
-      repo: byuapi-students-v2
+      repo: byuapi-email-utility
       branch: master
     - type: codebuild
       name: Build
@@ -22,7 +22,7 @@ pipelines:
     - type: github
       name: Github
       owner: byu-oit
-      repo: byuapi-students-v2
+      repo: byuapi-email-utility
       branch: release
     - type: codebuild
       name: Build
