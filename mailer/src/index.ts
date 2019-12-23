@@ -1,10 +1,11 @@
+/*eslint @typescript-eslint/camelcase: ["error", {allow: ["status_by_id", "status_datetime"]}]*/
 import uuid from 'uuid'
 import {send} from './ses/messages'
 import {storeMessage} from './s3/messages'
 import {resolveIds} from './validate/messages'
 import {Event, Message} from './types/model'
 
-export async function handler (event: Event) {
+export async function handler (event: Event): Promise<void> {
   const [to, cc, bcc, from] = await Promise.all([resolveIds(...event.to), resolveIds(...event.cc), resolveIds(...event.bcc), resolveIds(event.from)])
   const message: Message = {
     id: uuid(),
