@@ -1,6 +1,6 @@
 version: 1
 
-name: byuapi-students-v2
+name: byuapi-email-utility
 
 pipelines:
   dev: # dev-oit-byu
