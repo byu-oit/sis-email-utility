@@ -7,7 +7,7 @@ tags:
   data-sensitivity: confidential
 
 environments:
-  stg:
+  dev:
     email:
       type: s3
       logging: enabled
