@@ -10,6 +10,7 @@ phases:
       - DOCKER_REPO_NAME=$HANDEL_APP_NAME-server
       - API_IMAGE_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$DOCKER_REPO_NAME:$HANDEL_PIPELINE_NAME
       - chmod u+x ecr/*.sh
+      - chmod u+x mailer/*.sh
   pre_build:
     commands:
       - $(aws ecr get-login --no-include-email --region $AWS_REGION)
@@ -18,13 +19,13 @@ phases:
   build:
     commands:
       - DOCKER_BUILDKIT=1 docker build . -t $API_IMAGE_NAME
-      - cd mailer && npm run build
+      - cd mailer && ./build.sh # Build mailer daemon
   post_build:
     commands:
       - docker push $API_IMAGE_NAME
 artifacts:
   files:
-    - mailer/dist
+    - mailer/dist # Needed for deploying mailer daemon
     - handel.yml # Needed for the next pipeline phase (the handel deploy)
 cache:
   paths:
