@@ -1,6 +1,6 @@
-import AWS from 'aws-sdk'
+import * as AWS from 'aws-sdk'
 import debug from 'debug'
-import {Message, PersonInfo} from '../types/messages/model'
+import {Message, PersonInfo} from '../types/model'
 import {SendEmailRequest} from 'aws-sdk/clients/sesv2'
 
 const logger = debug('email-utility:ses')

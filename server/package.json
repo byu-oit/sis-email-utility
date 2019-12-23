@@ -1,8 +1,8 @@
 {
-  "name": "byuapi-email-utility",
+  "name": "byuapi-email-utility-server",
   "version": "1.0.0",
-  "description": "BYU API Email Utility",
-  "main": "src/server.js",
+  "description": "Server for BYU API email utility",
+  "main": "dist/server.js",
   "scripts": {
     "build": "del dist && tsc",
     "lint": "eslint . --ext .ts --fix src/",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/byu-oit/aws-ses-api-utility-node.git"
+    "url": "git+https://github.com/byu-oit/byuapi-email-utility.git"
   },
   "author": "Spencer Tuft <spencer.tuft@byu.edu>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/byu-oit/aws-ses-api-utility-node/issues"
+    "url": "https://github.com/byu-oit/byuapi-email-utility/issues"
   },
-  "homepage": "https://github.com/byu-oit/aws-ses-api-utility-node#readme",
+  "homepage": "https://github.com/byu-oit/byuapi-email-utility#readme",
   "devDependencies": {
     "@byu-oit/uapi-ts": "^0.0.5",
     "@types/chai": "^4.2.6",
@@ -28,7 +28,6 @@
     "@types/lodash.get": "^4.4.6",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.14",
-    "@types/request-promise": "^4.1.45",
     "@types/superagent": "^4.1.4",
     "@types/uuid": "^3.4.6",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
@@ -43,6 +42,7 @@
     "typescript": "^3.7.3"
   },
   "dependencies": {
+    "@byu-oit/env-ssm": "^2.0.0",
     "@byu-oit/uapi-paginate-nodejs": "^2.0.2",
     "aws-sdk": "^2.588.0",
     "byu-jwt": "^2.1.0",
@@ -52,8 +52,6 @@
     "lodash.get": "^4.4.2",
     "openapi-enforcer": "^1.6.3",
     "openapi-enforcer-middleware": "^1.1.7",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.5",
     "uuid": "^3.3.3"
   }
 }

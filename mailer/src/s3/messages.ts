@@ -1,9 +1,7 @@
-import * as Model from '../types/messages/model'
-import {ensureUserExists, removeObject, retrieveObject, storeObject} from './common'
-import {Category} from '../types/messages/request'
-import {PersonInfo} from '../types/messages/model'
+import * as Model from '../types/model'
+import {ensureUserExists, retrieveObject, storeObject} from './common'
 
-async function deliverMessage(category: Category, personInfo: PersonInfo, message: Model.Message): Promise<void> {
+async function deliverMessage(category: Model.Category, personInfo: Model.PersonInfo, message: Model.Message): Promise<void> {
   // Ensure that the user exists
   await ensureUserExists(personInfo.byuId)
 
@@ -42,32 +40,6 @@ async function deliverMessage(category: Category, personInfo: PersonInfo, messag
   }
 }
 
-export async function getMessageList(userId: string, category: Category): Promise<Model.MessageList> {
-  const obj = await retrieveObject(userId, category)
-  return JSON.parse(obj.Body as string) as Model.MessageList
-}
-
-export async function getMessage(userId: string, messageId: string): Promise<Model.Message> {
-  const obj = await retrieveObject(userId, messageId)
-  return JSON.parse(obj.Body as string) as Model.Message
-}
-
-export async function getMessages(userId: string, category: Category): Promise<Model.Messages> {
-  const list = await getMessageList(userId, category)
-
-  // Get contents of each object
-  const promises = []
-  for (const obj of Object.values(list)) {
-    if (obj.id) {
-      promises.push(getMessage(userId, obj.id))
-    }
-  }
-  const messageObjects = await Promise.all(promises)
-
-  // Transform objects slightly
-  return messageObjects.reduce((agg, cur) => ({...agg, [cur.id]: cur}), {})
-}
-
 export async function storeMessage(message: Model.Message): Promise<void> {
   // Store message object
   await storeObject('__email', message.id, message)
@@ -78,8 +50,4 @@ export async function storeMessage(message: Model.Message): Promise<void> {
 
   // Mark message as sent
   await deliverMessage('sent', message.from, message)
-}
-
-export async function deleteMessage(messageId: string): Promise<void> {
-  await removeObject('__email', messageId)
 }

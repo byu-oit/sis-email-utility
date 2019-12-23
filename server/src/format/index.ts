@@ -1,9 +1,8 @@
 /*eslint @typescript-eslint/camelcase: ["error", {allow: ["api_type", "value_array", "status_by_id", "status_datetime"]}]*/
-import * as Model from '../types/messages/model'
-import * as Response from '../types/messages/response'
+import {MessageModel, MessagesModel, UAPIMessage, UAPIMessages} from '../types'
 import {generateCollectionMetadataResponseObj, generateValidationResponseObj} from '../util/uapi'
 
-export function formatMessage (message: Model.Message): Response.Message {
+export function formatMessage (message: MessageModel): UAPIMessage {
   return {
     metadata: generateValidationResponseObj(200),
     id: {
@@ -59,7 +58,7 @@ export function formatMessage (message: Model.Message): Response.Message {
   }
 }
 
-export function formatMessages(messages: Model.Messages): Response.Messages {
+export function formatMessages(messages: MessagesModel): UAPIMessages {
   const values = Object.values(messages).map(formatMessage)
   return {
     links: {},

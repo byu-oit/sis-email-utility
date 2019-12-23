@@ -7,6 +7,15 @@ export interface PersonInfo {
   email: string
 }
 
+export interface Event {
+  to: string[]
+  cc: string[]
+  bcc: string[]
+  from: string
+  subject: string
+  body: string
+}
+
 export interface Message {
   id: string
   to: PersonInfo[]
@@ -20,10 +29,6 @@ export interface Message {
   status_by_id: string
 }
 
-export interface Messages {
-  [id: string]: Message
-}
-
 export interface SimpleMessage {
   id: string
   from: PersonInfo
@@ -35,7 +40,4 @@ export interface MessageList {
   [id: string]: SimpleMessage
 }
 
-export interface Validation<T> {
-  value: T
-  errors: string[]
-}
+export type Category = 'sent' | 'archive' | 'inbox'

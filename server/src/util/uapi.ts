@@ -4,6 +4,7 @@ import {UAPI} from '@byu-oit/uapi-ts'
 export enum HttpStatus {
   SUCCESS = 200,
   CREATED = 201,
+  ACCEPTED = 202,
   NO_CONTENT = 204,
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
@@ -16,6 +17,7 @@ export enum HttpStatus {
 export function getResponseForReturnCode(code: number): string {
   if (code===HttpStatus.SUCCESS) return 'Success'
   if (code===HttpStatus.CREATED) return 'Created'
+  if (code===HttpStatus.ACCEPTED) return 'Accepted'
   if (code===HttpStatus.NO_CONTENT) return 'No Content'
   if (code===HttpStatus.BAD_REQUEST) return 'Bad Request'
   if (code===HttpStatus.UNAUTHORIZED) return 'Unauthorized'
@@ -30,6 +32,7 @@ export function generateValidationResponseObj(code: number, message?: string, va
   if ([
     HttpStatus.SUCCESS,
     HttpStatus.CREATED,
+    HttpStatus.ACCEPTED,
     HttpStatus.NO_CONTENT,
     HttpStatus.BAD_REQUEST,
     HttpStatus.UNAUTHORIZED,

@@ -3,9 +3,6 @@ import path from 'path'
 import Enforcer from 'openapi-enforcer-middleware'
 import ByuJwt from 'byu-jwt'
 import * as authorize from './auth'
-import {ensureS3ResourcesExist} from './s3/common'
-import {checkDomainIdentityExists} from './ses/common'
-import {getParams} from './util/parameters'
 
 (async (): Promise<void> => {
   try {
@@ -29,11 +26,6 @@ import {getParams} from './util/parameters'
 
     // Plugin enforcer middleware to Express
     app.use(enforcer.middleware())
-
-    // Ensure AWS resources exist
-    await ensureS3ResourcesExist()
-    await checkDomainIdentityExists('byu.edu')
-    await getParams()
 
     // Start server
     const port = process.env.PORT ? parseInt(process.env.PORT) : 3000
