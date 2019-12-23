@@ -18,11 +18,13 @@ phases:
   build:
     commands:
       - DOCKER_BUILDKIT=1 docker build . -t $API_IMAGE_NAME
+      - cd mailer && npm run build
   post_build:
     commands:
       - docker push $API_IMAGE_NAME
 artifacts:
   files:
+    - mailer/dist
     - handel.yml # Needed for the next pipeline phase (the handel deploy)
 cache:
   paths:

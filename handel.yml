@@ -17,7 +17,7 @@ environments:
         - service_name: mailer
     mailer:
       type: lambda
-      path_to_code: ./mailer
+      path_to_code: mailer/dist
       handler: index.handler
       runtime: nodejs12
       description: Mailer daemon for BYU API email utility
@@ -60,7 +60,7 @@ environments:
         - service_name: mailer
     mailer:
       type: lambda
-      path_to_code: ./mailer
+      path_to_code: mailer/dist
       handler: index.handler
       runtime: nodejs12
       description: Mailer daemon for BYU API email utility
