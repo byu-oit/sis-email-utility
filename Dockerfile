@@ -16,7 +16,8 @@ RUN npm --production install
 
 # Add files needed to test/build server
 FROM base AS testfiles
-COPY server/test/ ./test/
+#COPY server/test/ ./test/
+RUN echo 'Missing tests'
 COPY server/.eslint* ./
 COPY server/tsconfig.json ./
 COPY server/src ./src
@@ -37,7 +38,6 @@ RUN npm run lint
 
 FROM testfiles AS unittest
 #RUN npm run test
-RUN echo 'Missing tests'
 
 FROM testfiles AS build
 RUN npm run build
