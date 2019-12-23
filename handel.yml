@@ -19,7 +19,7 @@ environments:
       type: lambda
       path_to_code: mailer/dist
       handler: index.handler
-      runtime: nodejs12
+      runtime: nodejs12.x
       description: Mailer daemon for BYU API email utility
       memory: 1024
       timeout: 10
@@ -62,7 +62,7 @@ environments:
       type: lambda
       path_to_code: mailer/dist
       handler: index.handler
-      runtime: nodejs12
+      runtime: nodejs12.x
       description: Mailer daemon for BYU API email utility
       memory: 1024
       timeout: 10
