@@ -16,7 +16,7 @@ pipelines:
     - type: handel
       name: DevDeploy
       environments_to_deploy:
-      - dev
+      - stg
   prd: # prd-sim-appdev-oit-byu
     phases:
     - type: github
