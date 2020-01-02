@@ -34,7 +34,7 @@ environments:
         max_tasks: 2
       load_balancer:
         type: https
-        https_certificate: cdf2a47b-264b-43b9-b7fb-d0382352897d
+        https_certificate: bfd9f3aa-9757-42ea-af88-4565f49a2de6
         dns_names:
         - byuapi-email-utility-stg.sim.byu.edu
         health_check_grace_period: 20
@@ -92,7 +92,7 @@ environments:
             threshold: 30
       load_balancer:
         type: https
-        https_certificate: cdf2a47b-264b-43b9-b7fb-d0382352897d
+        https_certificate: bfd9f3aa-9757-42ea-af88-4565f49a2de6
         dns_names:
         - byuapi-email-utility.sim.byu.edu
         health_check_grace_period: 20

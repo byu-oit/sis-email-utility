@@ -3,20 +3,5 @@
 
 # Include (start each line with a bang "!"):
 
-# OpenAPI doc
-!server/src/api.json
-
-# NPM files
-!server/package*.json
-
-# TypeScript config
-!server/tsconfig.json
-
-# ES lint config
-!server/.eslint*
-
-# Source files
-!server/src
-
-# Test files
-!server/test
+# Server files
+!server
