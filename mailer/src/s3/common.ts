@@ -3,14 +3,14 @@ import {GetObjectOutput, ListObjectsOutput, StorageClass} from 'aws-sdk/clients/
 import debug from 'debug'
 import {getParams} from '@byu-oit/env-ssm'
 import Cache from '../util/cache'
-const logger = debug('email-utility:s3')
+const logger = debug('email-utility-mailer:s3')
 
 const s3 = new AWS.S3({apiVersion: '2006-03-01', region: 'us-west-2'})
 
 const objectListCache = Cache<ListObjectsOutput>()
 
 export async function retrieveObject(target: string, id: string): Promise<GetObjectOutput> {
-  const {EMAIL_BUCKET_NAME} = await getParams(['EMAIL_BUCKET_NAME'], {prefix: 'HANDEL_PARAMETER_STORE_PREFIX'})
+  const {EMAIL_BUCKET_NAME} = await getParams(['EMAIL_BUCKET_NAME'])
   const Key = `${target}/${id}.json`
   logger(`retrieving object: ${Key}`)
   const obj = await s3.getObject({Bucket: EMAIL_BUCKET_NAME, Key}).promise()
@@ -19,7 +19,7 @@ export async function retrieveObject(target: string, id: string): Promise<GetObj
 }
 
 export async function storeObject(target: string, id: string, body: Record<string, any>, storageClass: StorageClass = 'STANDARD_IA'): Promise<void> {
-  const {EMAIL_BUCKET_NAME} = await getParams(['EMAIL_BUCKET_NAME'], {prefix: 'HANDEL_PARAMETER_STORE_PREFIX'})
+  const {EMAIL_BUCKET_NAME} = await getParams(['EMAIL_BUCKET_NAME'])
   const Key = `${target}/${id}.json`
   const Body = JSON.stringify(body)
   const StorageClass = storageClass
@@ -29,7 +29,7 @@ export async function storeObject(target: string, id: string, body: Record<strin
 }
 
 export async function removeObject(target: string, id: string): Promise<void> {
-  const {EMAIL_BUCKET_NAME} = await getParams(['EMAIL_BUCKET_NAME'], {prefix: 'HANDEL_PARAMETER_STORE_PREFIX'})
+  const {EMAIL_BUCKET_NAME} = await getParams(['EMAIL_BUCKET_NAME'])
   const Key = `${target}/${id}.json`
   logger(`removing object: ${Key}`)
   await s3.deleteObject({Bucket: EMAIL_BUCKET_NAME, Key}).promise()
@@ -37,7 +37,7 @@ export async function removeObject(target: string, id: string): Promise<void> {
 }
 
 async function objectExists(objectKey: string, caching = false): Promise<boolean> {
-  const {EMAIL_BUCKET_NAME} = await getParams(['EMAIL_BUCKET_NAME'], {prefix: 'HANDEL_PARAMETER_STORE_PREFIX'})
+  const {EMAIL_BUCKET_NAME} = await getParams(['EMAIL_BUCKET_NAME'])
   let objects = objectListCache.getCache()
   if (!caching || !objects) objects = await s3.listObjects({Bucket: EMAIL_BUCKET_NAME}).promise()
   if (caching && objectListCache.getCache()!==objects) objectListCache.setCache(objects)
@@ -45,7 +45,7 @@ async function objectExists(objectKey: string, caching = false): Promise<boolean
 }
 
 async function ensureObjectExists(objectKey: string, body: Record<string, any>, storageClass: StorageClass = 'STANDARD_IA'): Promise<void> {
-  const {EMAIL_BUCKET_NAME} = await getParams(['EMAIL_BUCKET_NAME'], {prefix: 'HANDEL_PARAMETER_STORE_PREFIX'})
+  const {EMAIL_BUCKET_NAME} = await getParams(['EMAIL_BUCKET_NAME'])
   logger(`Ensuring object "${objectKey}" exists`)
   if (!(await objectExists(objectKey, true))) {
     await s3.putObject({Bucket: EMAIL_BUCKET_NAME, Key: objectKey, Body: JSON.stringify(body), StorageClass: storageClass}).promise()

@@ -2,6 +2,7 @@ import get from 'lodash.get'
 import {persons} from '../types/persons'
 import * as Model from '../types/model'
 import * as wso2 from '../util/wso2'
+import {URLSearchParams} from 'url'
 
 function isByuId (v: any): boolean {
   return typeof v === 'string' && /^[0-9]{9}$/.test(v)
@@ -15,6 +16,7 @@ function isPersonId(v: any): boolean {
 
 export async function resolveIds(...ids: string[]): Promise<Model.PersonInfo[]> {
   let url = 'https://api.byu.edu/byuapi/persons/v3/?'
+
   const personIds = []
   const byuIds = []
   const netIds = []
@@ -25,9 +27,13 @@ export async function resolveIds(...ids: string[]): Promise<Model.PersonInfo[]> 
     else if (isNetId(id)) netIds.push(id)
   }
 
-  if (personIds.length) url += `person_ids=${personIds.join(',')}`
-  if (byuIds.length) url += `byu_ids=${byuIds.join(',')}`
-  if (netIds.length) url += `net_ids=${netIds.join(',')}`
+  const queries = new URLSearchParams()
+  if (personIds.length) queries.append('person_ids', personIds.join(','))
+  if (byuIds.length) queries.append('byu_ids', byuIds.join(','))
+  if (netIds.length) queries.append('net_ids', netIds.join(','))
+  const qs = queries.toString()
+  if (!qs) return []
+  else url += qs
 
   const request = await wso2.configure()
   const result = await request({url}) as persons

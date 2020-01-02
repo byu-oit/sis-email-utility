@@ -1,6 +1,6 @@
 import debug from 'debug'
 import Timeout = NodeJS.Timeout
-const logger = debug('email-utility:cache')
+const logger = debug('email-utility-mailer:cache')
 
 interface CacheData<T> {
   endTime: number | null

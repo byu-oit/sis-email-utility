@@ -10,7 +10,7 @@ async function deliverMessage(category: Model.Category, personInfo: Model.Person
     id: message.id,
     from: message.from,
     subject: message.subject,
-    timestamp: (new Date()).toUTCString()
+    timestamp: (new Date()).toISOString()
   }
 
   // Update each box file
