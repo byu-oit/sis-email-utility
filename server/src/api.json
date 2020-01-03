@@ -80,6 +80,28 @@
               }
             }
           },
+          "401": {
+            "description": "Not Authenticated",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "$ref": "#/definitions/std_simple_metadata"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not Authorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "$ref": "#/definitions/std_simple_metadata"
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal Error",
             "schema": {

@@ -118,6 +118,104 @@
               }
             }
           },
+          "401": {
+            "description": "Not Authenticated",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "description": "UAPI Simple Metadata",
+                  "type": "object",
+                  "required": [
+                    "validation_response"
+                  ],
+                  "x-tags": [
+                    "std"
+                  ],
+                  "properties": {
+                    "validation_response": {
+                      "description": "UAPI Validation Response",
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "number"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "x-tags": [
+                        "std"
+                      ]
+                    },
+                    "validation_information": {
+                      "description": "UAPI Validation Information",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "x-tags": [
+                        "std"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not Authorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "description": "UAPI Simple Metadata",
+                  "type": "object",
+                  "required": [
+                    "validation_response"
+                  ],
+                  "x-tags": [
+                    "std"
+                  ],
+                  "properties": {
+                    "validation_response": {
+                      "description": "UAPI Validation Response",
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "number"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "x-tags": [
+                        "std"
+                      ]
+                    },
+                    "validation_information": {
+                      "description": "UAPI Validation Information",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "x-tags": [
+                        "std"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Internal Error",
             "schema": {
