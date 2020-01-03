@@ -4,9 +4,6 @@
     {
       "Sid": "mail",
       "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
       "Action": [
         "ses:SendEmail",
         "ses:SendRawEmail"
