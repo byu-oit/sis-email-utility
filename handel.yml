@@ -1,6 +1,6 @@
 version: 1
 
-name: byuapi-email-utility
+name: sis-email-utility
 
 tags:
   team: AD-Academic Information Management
@@ -20,7 +20,7 @@ environments:
       path_to_code: mailer/dist
       handler: index.handler
       runtime: nodejs12.x
-      description: Mailer daemon for BYU API email utility
+      description: Mailer daemon for SIS email utility
       memory: 1024
       timeout: 10
       dependencies:
@@ -36,11 +36,11 @@ environments:
         type: https
         https_certificate: bfd9f3aa-9757-42ea-af88-4565f49a2de6
         dns_names:
-        - byuapi-email-utility-stg.sim.byu.edu
+        - email-utility-stg.sim.byu.edu
         health_check_grace_period: 20
       containers:
       - name: server
-        image_name: "<account>/byuapi-email-utility-server:stg"
+        image_name: "<account>/email-utility-server:stg"
         port_mappings:
         - 3000
         routing:
@@ -63,7 +63,7 @@ environments:
       path_to_code: mailer/dist
       handler: index.handler
       runtime: nodejs12.x
-      description: Mailer daemon for BYU API email utility
+      description: Mailer daemon for SIS email utility
       memory: 1024
       timeout: 10
       dependencies:
@@ -94,11 +94,11 @@ environments:
         type: https
         https_certificate: bfd9f3aa-9757-42ea-af88-4565f49a2de6
         dns_names:
-        - byuapi-email-utility.sim.byu.edu
+        - email-utility.sim.byu.edu
         health_check_grace_period: 20
       containers:
       - name: server
-        image_name: "<account>/byuapi-email-utility-server:prd"
+        image_name: "<account>/email-utility-server:prd"
         port_mappings:
         - 3000
         routing:

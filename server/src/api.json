@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "BYU API Email Utility",
+    "title": "SIS Email Utility",
     "description": "Email Utility for use by Brigham Young University",
     "license": {
       "name": "Apache-2.0",
@@ -552,7 +552,7 @@
     "application/json"
   ],
   "host": "api.byu.edu",
-  "basePath": "/byuapi/utility/email",
+  "basePath": "/domain/utility/email",
   "tags": [
     {
       "name": "email",

@@ -1,6 +1,6 @@
 version: 1
 
-name: byuapi-email-utility
+name: sis-email-utility
 
 pipelines:
   stg: # prd-sim-appdev-oit-byu
