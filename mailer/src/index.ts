@@ -6,7 +6,10 @@ import {resolveIds} from './external/persons'
 import {Event, Message} from './types/model'
 
 export async function handler (event: Event): Promise<void> {
+  console.log('Resolving identities')
   const [to, cc, bcc, sender] = await Promise.all([resolveIds(...event.to), resolveIds(...event.cc), resolveIds(...event.bcc), resolveIds(event.from)])
+  console.log('Resolved identities')
+
   if (!to.length && !cc.length && !sender.length) throw new Error('Missing recipient(s)')
   if (!sender.length) throw new Error('Missing sender')
 
@@ -22,6 +25,12 @@ export async function handler (event: Event): Promise<void> {
     status_datetime: new Date().toISOString(),
     status_by_id: sender[0].byuId
   }
+
+  console.log('Sending message')
   await send(message)
+  console.log('Sent message')
+
+  console.log('Storing message')
   await storeMessage(message)
+  console.log('Stored message')
 }
