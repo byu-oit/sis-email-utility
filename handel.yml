@@ -40,7 +40,7 @@ environments:
         health_check_grace_period: 20
       containers:
       - name: server
-        image_name: "<account>/email-utility-server:stg"
+        image_name: "<account>/sis-email-utility-server:stg"
         port_mappings:
         - 3000
         routing:
@@ -98,7 +98,7 @@ environments:
         health_check_grace_period: 20
       containers:
       - name: server
-        image_name: "<account>/email-utility-server:prd"
+        image_name: "<account>/sis-email-utility-server:prd"
         port_mappings:
         - 3000
         routing:
