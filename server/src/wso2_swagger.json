@@ -1,0 +1,202 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "BYU API Email Utility",
+    "description": "Email Utility for use by Brigham Young University",
+    "license": {
+      "name": "Apache-2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "contact": {
+      "name": "OIT Service Desk Support",
+      "url": "https://it.byu.edu",
+      "email": "it@byu.edu"
+    }
+  },
+  "paths": {
+    "/messages": {
+      "x-controller": "messages",
+      "post": {
+        "x-operation": "sendMessage",
+        "operationId": "sendMessage",
+        "summary": "Send message",
+        "description": "Send message",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "to": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "cc": {
+                  "type": "string"
+                },
+                "bcc": {
+                  "type": "string"
+                },
+                "subject": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "New message request"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "type": "string",
+              "default": "Created",
+              "enum": [
+                "Created"
+              ]
+            },
+            "headers": {
+              "location": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "description": "UAPI Simple Metadata",
+                  "type": "object",
+                  "required": [
+                    "validation_response"
+                  ],
+                  "x-tags": [
+                    "std"
+                  ],
+                  "properties": {
+                    "validation_response": {
+                      "description": "UAPI Validation Response",
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "number"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "x-tags": [
+                        "std"
+                      ]
+                    },
+                    "validation_information": {
+                      "description": "UAPI Validation Information",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "x-tags": [
+                        "std"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "metadata": {
+                  "description": "UAPI Simple Metadata",
+                  "type": "object",
+                  "required": [
+                    "validation_response"
+                  ],
+                  "x-tags": [
+                    "std"
+                  ],
+                  "properties": {
+                    "validation_response": {
+                      "description": "UAPI Validation Response",
+                      "type": "object",
+                      "required": [
+                        "code",
+                        "message"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "number"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "x-tags": [
+                        "std"
+                      ]
+                    },
+                    "validation_information": {
+                      "description": "UAPI Validation Information",
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "x-tags": [
+                        "std"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "email"
+        ]
+      }
+    }
+  },
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "host": "api.byu.edu",
+  "basePath": "/byuapi/utility/email",
+  "tags": [
+    {
+      "name": "email",
+      "description": "Email Utility"
+    },
+    {
+      "name": "std",
+      "description": "Shared Standard"
+    },
+    {
+      "name": "user",
+      "description": "User Identity"
+    }
+  ]
+}
