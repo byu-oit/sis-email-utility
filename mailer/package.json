@@ -41,7 +41,7 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
-    "@byu-oit/env-ssm": "^2.0.1",
+    "@byu-oit/env-ssm": "^2.0.2",
     "aws-sdk": "^2.597.0",
     "byu-wso2-request": "^2.3.4",
     "lodash.get": "^4.4.2"

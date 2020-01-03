@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "$#" -ne 3 ]; then
-  echo "Usage is ./add-ses-permissions.sh <function name>";
+  echo "Usage is ./add-ses-permissions.sh <function name> <role name> <access policy file>";
   exit 1;
 fi
 
