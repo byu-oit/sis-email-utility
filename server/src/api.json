@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
+    "version": "v1",
     "title": "SIS Email Utility",
     "description": "Email Utility for use by Brigham Young University",
     "license": {
