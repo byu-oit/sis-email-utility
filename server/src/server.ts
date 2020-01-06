@@ -9,6 +9,8 @@ import * as authorize from './auth'
     const app = express()
     app.use(express.json())
 
+    app.get('/xhealth', (req, res) => res.status(200).send('The force is strong with this one.'))
+
     const controllerDir = path.resolve(__dirname, 'controllers')
     const oasPath = path.resolve(__dirname, 'api.json')
 
