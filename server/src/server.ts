@@ -1,4 +1,4 @@
-import express from 'express'
+import express, {Response} from 'express'
 import path from 'path'
 import Enforcer from 'openapi-enforcer-middleware'
 import ByuJwt from 'byu-jwt'
@@ -7,12 +7,20 @@ import * as authorize from './auth'
 (async (): Promise<void> => {
   try {
     const app = express()
-    app.use(express.json())
+    const controllerDir = path.resolve(__dirname, 'controllers')
+    const oasPath = path.resolve(__dirname, 'api.json')
 
     app.get('/xhealth', (req, res) => res.status(200).send('The force is strong with this one.'))
 
-    const controllerDir = path.resolve(__dirname, 'controllers')
-    const oasPath = path.resolve(__dirname, 'api.json')
+    app.use((req, res, next) => {
+      const now = new Date()
+      console.log(`${req.method} called on ${req.originalUrl} at ${now.toLocaleTimeString('en-US', { timeZone: 'America/Denver', timeZoneName: 'short', weekday: 'short', month: 'short', day: 'numeric' })} (${now.toISOString()})`)
+      console.log('Query:', req.query)
+      console.log('Body:', JSON.stringify(req.body))
+      next()
+    })
+
+    app.use(express.json())
 
     // Wait for enforcer to resolve OAS doc
     const enforcer = new Enforcer(oasPath)
