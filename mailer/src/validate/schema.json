@@ -82,6 +82,8 @@
         }
       },
       "required": [
+        "byuId",
+        "netId",
         "email"
       ]
     },
