@@ -14,7 +14,7 @@ function isPersonId(v: any): boolean {
   return typeof v === 'string' && /^[0-9]{3}2[0-9]{4}2$/.test(v)
 }
 
-export async function resolveIds(...ids: string[]): Promise<Model.PersonInfo[]> {
+export async function resolveIds(ids: string[]): Promise<Model.PersonInfo[]> {
   let url = 'https://api.byu.edu/byuapi/persons/v3/?'
 
   const personIds = []

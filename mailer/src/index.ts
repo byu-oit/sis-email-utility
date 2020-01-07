@@ -7,7 +7,7 @@ import {Event, Message} from './types/model'
 
 export async function handler (event: Event): Promise<void> {
   console.log('Resolving identities')
-  const [to, cc, bcc, sender] = await Promise.all([resolveIds(...event.to), resolveIds(...event.cc), resolveIds(...event.bcc), resolveIds(event.from)])
+  const [to, cc, bcc, sender] = await Promise.all([resolveIds(event.to), resolveIds(event.cc), resolveIds(event.bcc), resolveIds([event.from])])
   console.log('Resolved identities')
 
   if (!to.length && !cc.length && !sender.length) throw new Error('Missing recipient(s)')
