@@ -7,7 +7,7 @@ export interface PersonInfo {
   email: string
 }
 
-export interface Event {
+export interface SNSEventMessage {
   to: string[]
   cc: string[]
   bcc: string[]

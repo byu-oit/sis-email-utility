@@ -3,12 +3,16 @@ import uuid from 'uuid'
 import {send} from './ses/messages'
 import {storeMessage} from './s3/messages'
 import {resolveIds} from './external/persons'
-import {Event, Message} from './types/model'
+import {Message} from './types/model'
+import {SNSEvent} from 'aws-lambda'
+import * as validate from './validate'
 
-export async function handler (event: Event): Promise<void> {
-  console.log('EVENT:', event)
+export async function handler (event: SNSEvent): Promise<void> {
+  const email = validate.emailNotification(event)
+  console.log(`Message body: ${email}`)
+
   console.log('Resolving identities')
-  const [to, cc, bcc, sender] = await Promise.all([resolveIds(...event.to), resolveIds(...event.cc), resolveIds(...event.bcc), resolveIds(event.from)])
+  const [to, cc, bcc, sender] = await Promise.all([resolveIds(...email.to), resolveIds(...email.cc), resolveIds(...email.bcc), resolveIds(email.from)])
   console.log('Resolved identities')
 
   if (!to.length && !cc.length && !sender.length) throw new Error('Missing recipient(s)')
@@ -20,8 +24,8 @@ export async function handler (event: Event): Promise<void> {
     cc,
     bcc,
     from: sender[0],
-    subject: event.subject,
-    body: event.body,
+    subject: email.subject,
+    body: email.body,
     status: 'sent',
     status_datetime: new Date().toISOString(),
     status_by_id: sender[0].byuId
