@@ -2,7 +2,7 @@
 import uuid from 'uuid'
 import {send} from './ses/messages'
 import {storeMessage} from './s3/messages'
-import {Message} from './types/model'
+import {Message} from './types'
 import {SNSEvent} from 'aws-lambda'
 import * as validate from './validate'
 import {resolveIds} from './external/persons'

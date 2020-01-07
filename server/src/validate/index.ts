@@ -1,8 +1,8 @@
 import {Request} from 'express'
 import {DecodedByuJwt} from 'byu-jwt'
-import {Event, NewMessageBody, Validation} from '../types'
+import {EventMessage, NewMessageBody, Validation} from '../types'
 
-export function newMessage(req: Request & { verifiedJWTs: DecodedByuJwt}): Validation<Event> {
+export function newMessage(req: Request & { verifiedJWTs: DecodedByuJwt}): Validation<EventMessage> {
   const errors: string[] = []
 
   const claims = req.verifiedJWTs.claims

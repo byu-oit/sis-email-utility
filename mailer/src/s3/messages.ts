@@ -1,4 +1,4 @@
-import * as Model from '../types/model'
+import * as Model from '../types'
 import {ensureUserExists, retrieveObject, storeObject} from './common'
 
 async function deliverMessage(category: Model.Category, personInfo: Model.PersonInfo, message: Model.Message): Promise<void> {

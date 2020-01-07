@@ -1,6 +1,6 @@
 import get from 'lodash.get'
 import {persons} from '../types/persons'
-import * as Model from '../types/model'
+import * as Model from '../types'
 import * as wso2 from '../util/wso2'
 import {URLSearchParams} from 'url'
 

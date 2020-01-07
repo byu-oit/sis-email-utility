@@ -22,10 +22,10 @@ export interface NewMessageBody {
   body?: string
 }
 
-export interface Event {
-  to: string[]
-  cc: string[]
-  bcc: string[]
+export interface EventMessage {
+  to?: string[]
+  cc?: string[]
+  bcc?: string[]
   from: PersonInfo
   subject: string
   body: string

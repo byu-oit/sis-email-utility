@@ -1,7 +1,7 @@
 import {Request, Response} from 'express'
 import { DecodedByuJwt } from 'byu-jwt'
 import * as validate from '../validate'
-import * as bus from '../sns'
+import * as bus from '../aws/sns'
 import {generateMetadataResponseObj, HttpStatus} from '../util/uapi'
 
 export async function sendMessage(req: Request & { verifiedJWTs: DecodedByuJwt }, res: Response): Promise<any> {
