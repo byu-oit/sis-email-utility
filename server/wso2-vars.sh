@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ "$#" -ne 3 ]; then
-  echo "Usage is ./vars-env.sh <handel ssm prefix> <client key> <client secret>";
+  echo "Usage is ./wso2-vars.sh <handel ssm prefix> <client key> <client secret>";
   exit 1;
 fi
 
