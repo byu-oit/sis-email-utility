@@ -9,7 +9,7 @@ import * as validate from './validate'
 
 export async function handler (event: SNSEvent): Promise<void> {
   const email = validate.emailNotification(event)
-  console.log(`Message body: ${email}`)
+  console.log(`Message body: ${JSON.stringify(email, null, 2)}`)
 
   console.log('Resolving identities')
   const [to, cc, bcc, sender] = await Promise.all([resolveIds(...email.to), resolveIds(...email.cc), resolveIds(...email.bcc), resolveIds(email.from)])
