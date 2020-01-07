@@ -11,7 +11,6 @@ phases:
       - API_IMAGE_NAME=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$DOCKER_REPO_NAME:$HANDEL_PIPELINE_NAME
       - chmod u+x ecr/*.sh
       - chmod u+x mailer/*.sh
-      - chmod u+x server/*.sh
   pre_build:
     commands:
       - $(aws ecr get-login --no-include-email --region $AWS_REGION)
@@ -21,7 +20,6 @@ phases:
     commands:
       - DOCKER_BUILDKIT=1 docker build . -t $API_IMAGE_NAME # Build server image
       - cd mailer && ./build.sh # Build mailer daemon
-      - cd server && ./vars-ssm.sh $AWS_ACCOUNT_ID $AWS_REGION $HANDEL_APP_NAME $HANDEL_PIPELINE_NAME # Add ssm vars
   post_build:
     commands:
       - docker push $API_IMAGE_NAME

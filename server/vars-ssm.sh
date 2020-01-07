@@ -9,8 +9,9 @@ accountId=$1
 region=$2
 appName=$3
 pipelineName=$4
-paramName="$appName.$pipelineName.BUS_TOPIC_ARN"
+prefix="$appName.$pipelineName"
 
+paramName="$prefix.BUS_TOPIC_ARN"
 echo "Adding $paramName"
 aws ssm put-parameter \
     --name "$paramName" \

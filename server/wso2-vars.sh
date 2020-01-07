@@ -1,26 +1,30 @@
 #!/bin/sh
 
-if [ "$#" -ne 3 ]; then
-  echo "Usage is ./wso2-vars.sh <handel ssm prefix> <client key> <client secret>";
+if [ "$#" -ne 4 ]; then
+  echo "Usage is ./wso2-vars.sh <handel app name> <handel pipeline name> <client key> <client secret>";
   exit 1;
 fi
 
-prefix=$1
-clientKey=$2
-clientSecret=$3
+appName=$1
+pipelineName=$2
+clientKey=$3
+clientSecret=$4
+prefix="$appName.$pipelineName"
 
-echo "Adding $prefix.CLIENT_KEY"
+paramName="$prefix.CLIENT_KEY"
+echo "Adding $paramName"
 aws ssm put-parameter \
-    --name "$prefix.CLIENT_KEY" \
+    --name "$paramName" \
     --description "Email Utility WSO2 Client Key" \
     --type "SecureString" \
     --value "$clientKey" \
-    --no-overwrite
+    --overwrite
 
-echo "Adding $prefix.CLIENT_SECRET"
+paramName="$prefix.CLIENT_SECRET"
+echo "Adding $paramName"
 aws ssm put-parameter \
-    --name "$prefix.CLIENT_SECRET" \
+    --name "$paramName" \
     --description "Email Utility WSO2 Client Secret" \
     --type "SecureString" \
     --value "$clientSecret" \
-    --no-overwrite
+    --overwrite
