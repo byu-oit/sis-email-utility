@@ -17,4 +17,4 @@ aws ssm put-parameter \
     --description "Email Utility Bus Topic ARN" \
     --type "String" \
     --value "arn:aws:sns:$region:$accountId:$appName-$pipelineName-bus-sns" \
-    --no-overwrite
+    --overwrite
