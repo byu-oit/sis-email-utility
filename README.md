@@ -11,6 +11,6 @@ Due to Handel limitations, the mailer access-policy.json must be added (after in
 1. Login with awslogin and assume the Admin role for the account
 2. In the project root, run `mailer/add-ses-permissions.sh <function name> <role name> mailer/access-policy.json`
 
-Due to ECS limitations, server environment variables will be retrieved from ssm parameter store.
+Due to ECS limitations, the server environment variables must be added to the ssm parameter store (after initial deployment).
 1. Login with awslogin and assume at least the PowerUser role
 2. In the project root, run, `server/ssm-env-vars.sh <handel ssm prefix> <bus topic arn> <client key> <client secret>`
