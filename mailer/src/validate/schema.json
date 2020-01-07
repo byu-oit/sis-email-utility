@@ -34,6 +34,7 @@
       "items": {
         "type": "string"
       },
+      "maxItems": 100,
       "uniqueItems": true
     },
     "cc": {
@@ -42,6 +43,7 @@
       "items": {
         "type": "string"
       },
+      "maxItems": 100,
       "uniqueItems": true
     },
     "bcc": {
@@ -50,6 +52,7 @@
       "items": {
         "type": "string"
       },
+      "maxItems": 100,
       "uniqueItems": true
     },
     "from": {
