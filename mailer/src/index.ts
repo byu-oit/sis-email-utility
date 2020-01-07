@@ -1,7 +1,7 @@
 /*eslint @typescript-eslint/camelcase: ["error", {allow: ["status_by_id", "status_datetime", "status_information"]}]*/
 import uuid from 'uuid'
-import {send} from './ses/messages'
-import {storeMessage} from './s3/messages'
+import {send} from './aws/ses'
+import {storeMessage} from './aws/s3'
 import {Message} from './types'
 import {SNSEvent} from 'aws-lambda'
 import * as validate from './validate'
