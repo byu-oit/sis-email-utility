@@ -1,14 +1,14 @@
+import Ajv from 'ajv'
 import {SNSEvent} from 'aws-lambda'
 import {SNSEventMessage} from '../types/model'
+import * as schema from './schema.json'
 
-export function emailNotification (event: SNSEvent): SNSEventMessage {
-  const eventStr = event.Records[0].Sns.Message
-  const message = JSON.parse(eventStr)
-  const expected = ['to', 'cc', 'bcc', 'from', 'subject', 'body',]
-  const errors = []
-  for (const prop of expected) {
-    if (!(prop in message)) errors.push(`Missing property "${prop}" in message`)
-  }
-  if (errors.length) throw new Error(`Validation Errors: ${errors.join(', ')}`)
-  return message as SNSEventMessage
+const ajv = new Ajv()
+const validate = ajv.compile(schema)
+
+export async function emailNotification (event: SNSEvent): Promise<SNSEventMessage> {
+  const data = JSON.parse(event.Records[0].Sns.Message)
+  const valid = validate(data)
+  if (!valid) throw new Error(`Validation Errors: ${validate.errors}`)
+  return data as SNSEventMessage
 }

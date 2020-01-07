@@ -44,7 +44,7 @@ export async function storeMessage(message: Model.Message): Promise<void> {
   // Store message object
   await storeObject('__email', message.id, message)
 
-  // Deliver message to recipients
+  // Deliver message to recipients' boxes
   const recipients = [...message.to, ...message.cc, ...message.bcc]
   await Promise.all(recipients.map(recipient => deliverMessage('inbox', recipient, message)))
 

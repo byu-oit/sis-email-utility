@@ -8,10 +8,10 @@ export interface PersonInfo {
 }
 
 export interface SNSEventMessage {
-  to: string[]
-  cc: string[]
-  bcc: string[]
-  from: string
+  to?: string[]
+  cc?: string[]
+  bcc?: string[]
+  from: PersonInfo
   subject: string
   body: string
 }

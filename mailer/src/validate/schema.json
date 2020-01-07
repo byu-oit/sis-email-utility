@@ -1,0 +1,100 @@
+{
+  "title": "SNSEventMessage",
+  "type": "object",
+  "anyOf": [
+    {
+      "required": [
+        "to",
+        "from",
+        "subject",
+        "body"
+      ]
+    },
+    {
+      "required": [
+        "cc",
+        "from",
+        "subject",
+        "body"
+      ]
+    },
+    {
+      "required": [
+        "bcc",
+        "from",
+        "subject",
+        "body"
+      ]
+    }
+  ],
+  "properties": {
+    "to": {
+      "title": "to",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "cc": {
+      "title": "cc",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "bcc": {
+      "title": "bcc",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "from": {
+      "title": "from",
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "title": "firstName"
+        },
+        "surname": {
+          "type": "string",
+          "title": "surname"
+        },
+        "byuId": {
+          "type": "string",
+          "title": "byuId"
+        },
+        "netId": {
+          "type": "string",
+          "title": "netId"
+        },
+        "personId": {
+          "type": "string",
+          "title": "personId"
+        },
+        "email": {
+          "type": "string",
+          "title": "email"
+        }
+      },
+      "required": [
+        "email"
+      ]
+    },
+    "subject": {
+      "type": "string",
+      "title": "subject"
+    },
+    "body": {
+      "type": "string",
+      "title": "body"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "to": [ "stuft2" ],
+  "cc": [ "garygsc" ],
+  "bcc": [ "derenhan" ],
+  "from": {
+    "email": "stuft2@byu.edu"
+  },
+  "subject": "Testing Schema",
+  "body": "This is only a test."
+}
