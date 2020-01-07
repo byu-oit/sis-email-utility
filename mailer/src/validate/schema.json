@@ -34,8 +34,7 @@
       "items": {
         "type": "string"
       },
-      "uniqueItems": true,
-      "minItems": 1
+      "uniqueItems": true
     },
     "cc": {
       "title": "cc",
@@ -43,8 +42,7 @@
       "items": {
         "type": "string"
       },
-      "uniqueItems": true,
-      "minItems": 1
+      "uniqueItems": true
     },
     "bcc": {
       "title": "bcc",
@@ -52,8 +50,7 @@
       "items": {
         "type": "string"
       },
-      "uniqueItems": true,
-      "minItems": 1
+      "uniqueItems": true
     },
     "from": {
       "title": "from",
