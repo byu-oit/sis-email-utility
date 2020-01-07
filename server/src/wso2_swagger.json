@@ -54,13 +54,13 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created",
+          "202": {
+            "description": "Accepted",
             "schema": {
               "type": "string",
-              "default": "Created",
+              "default": "Accepted",
               "enum": [
-                "Created"
+                "Accepted"
               ]
             },
             "headers": {

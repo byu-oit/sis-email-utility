@@ -11,6 +11,15 @@ appName=$3
 pipelineName=$4
 prefix="$appName.$pipelineName"
 
+paramName="HANDEL_PARAMETER_STORE_PREFIX"
+echo "Adding $paramName"
+aws ssm put-parameter \
+    --name "$paramName" \
+    --description "Handel Parameter Store Prefix" \
+    --type "String" \
+    --value "$prefix" \
+    --overwrite
+
 paramName="$prefix.BUS_TOPIC_ARN"
 echo "Adding $paramName"
 aws ssm put-parameter \

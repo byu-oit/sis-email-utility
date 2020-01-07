@@ -58,9 +58,9 @@
             "description": "Accepted",
             "schema": {
               "type": "string",
-              "default": "Created",
+              "default": "Accepted",
               "enum": [
-                "Created"
+                "Accepted"
               ]
             },
             "headers": {
