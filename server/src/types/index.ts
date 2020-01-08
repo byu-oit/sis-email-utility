@@ -1,4 +1,6 @@
 import {UAPI} from '@byu-oit/uapi-ts/index'
+import {NextFunction, Request, Response} from "express"
+import {DecodedByuJwt} from "byu-jwt"
 
 export interface Validation<T> {
   value: T
@@ -87,3 +89,4 @@ export interface UAPIMessages {
   values: UAPIMessage[]
 }
 
+export type MiddlewareFunction = (req: Request & { verifiedJWTs?: DecodedByuJwt }, res: Response, next: NextFunction) => any

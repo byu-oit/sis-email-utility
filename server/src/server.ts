@@ -1,8 +1,9 @@
-import express, {Response} from 'express'
+import express, {Request, Response} from 'express'
 import path from 'path'
 import Enforcer from 'openapi-enforcer-middleware'
 import ByuJwt from 'byu-jwt'
-import * as authorize from './auth'
+import * as authorize from './middleware/auth'
+import {EnforcerError} from './middleware/enforcer-error'
 
 (async (): Promise<void> => {
   try {
@@ -10,7 +11,7 @@ import * as authorize from './auth'
     const controllerDir = path.resolve(__dirname, 'controllers')
     const oasPath = path.resolve(__dirname, 'api.json')
 
-    app.get('/xhealth', (req, res) => res.status(200).send('The force is strong with this one.'))
+    app.get('/xhealth', (req: Request, res: Response) => res.status(200).send('The force is strong with this one.'))
 
     app.use((req, res, next) => {
       const now = new Date()
@@ -36,6 +37,9 @@ import * as authorize from './auth'
 
     // Plugin enforcer middleware to Express
     app.use(enforcer.middleware())
+
+    // Enforcer error handling middleware
+    app.use(EnforcerError)
 
     // Start server
     const port = process.env.PORT ? parseInt(process.env.PORT) : 3000
