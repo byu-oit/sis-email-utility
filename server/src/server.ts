@@ -13,6 +13,8 @@ import {EnforcerError} from './middleware/enforcer-error'
 
     app.get('/xhealth', (req: Request, res: Response) => res.status(200).send('The force is strong with this one.'))
 
+    app.use(express.json())
+
     app.use((req, res, next) => {
       const now = new Date()
       console.log(`${req.method} called on ${req.originalUrl} at ${now.toLocaleTimeString('en-US', { timeZone: 'America/Denver', timeZoneName: 'short', weekday: 'short', month: 'short', day: 'numeric' })} (${now.toISOString()})`)
@@ -20,8 +22,6 @@ import {EnforcerError} from './middleware/enforcer-error'
       console.log('Body:', JSON.stringify(req.body))
       next()
     })
-
-    app.use(express.json())
 
     // Wait for enforcer to resolve OAS doc
     const enforcer = new Enforcer(oasPath)
