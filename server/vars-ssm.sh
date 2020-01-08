@@ -11,7 +11,7 @@ appName=$3
 pipelineName=$4
 prefix="$appName.$pipelineName"
 
-paramName="HANDEL_ENVIRONMENT_NAME"
+paramName="$prefix.HANDEL_ENVIRONMENT_NAME"
 echo "Adding $paramName"
 aws ssm put-parameter \
     --name "$paramName" \
