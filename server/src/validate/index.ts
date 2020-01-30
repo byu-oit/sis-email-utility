@@ -26,7 +26,7 @@ export async function newMessage(req: Request & { verifiedJWTs: DecodedByuJwt })
   if (env === 'stg') {
     for (const recipients of [to, cc, bcc]) {
       if (recipients.length){
-        recipients.length = 0
+        recipients.length = 0 // Delete items in the array
         recipients.push(sender.netId)
       }
     }
