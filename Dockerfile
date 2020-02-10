@@ -1,4 +1,4 @@
-FROM node:12.14.0-slim AS base
+FROM node:13.8.0-slim AS base
 
 # Necessary if building/running these containers from data center on-premises (not needed for AWS deployment)
 # ENV http_proxy=${http_proxy}
