@@ -1,6 +1,6 @@
 import {UAPI} from '@byu-oit/uapi-ts/index'
-import {NextFunction, Request, Response} from "express"
-import {DecodedByuJwt} from "byu-jwt"
+import {NextFunction, Request, Response} from 'express'
+import {DecodedByuJwt} from 'byu-jwt'
 
 export interface Validation<T> {
   value: T
