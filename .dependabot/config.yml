@@ -19,7 +19,7 @@ update_configs:
       - match:
           update_type: "semver:patch"
   - package_manager: "docker"
-    directory: "server"
+    directory: "/"
     target_branch: dev
     update_schedule: weekly
     default_reviewers:
