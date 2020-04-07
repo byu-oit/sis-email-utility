@@ -6,6 +6,9 @@ update_configs:
     update_schedule: weekly
     default_reviewers:
       - stuft2
+    ignore_updates:
+      - match:
+          update_type: "semver:major"
     automerged_updates:
       - match:
           update_type: "semver:patch"
@@ -15,6 +18,9 @@ update_configs:
     update_schedule: weekly
     default_reviewers:
       - stuft2
+    ignore_updates:
+      - match:
+          update_type: "semver:major"
     automerged_updates:
       - match:
           update_type: "semver:patch"
