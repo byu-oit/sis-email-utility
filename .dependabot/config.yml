@@ -1,8 +1,17 @@
 version: 1
 update_configs:
   - package_manager: "javascript"
-    directory: "/"
-    target_branch: dev
+    directory: "mailer"
+    target_branch: master
+    update_schedule: weekly
+    default_reviewers:
+      - stuft2
+    automerged_updates:
+      - match:
+          update_type: "semver:patch"
+  - package_manager: "javascript"
+    directory: "server"
+    target_branch: master
     update_schedule: weekly
     default_reviewers:
       - stuft2
@@ -10,7 +19,7 @@ update_configs:
       - match:
           update_type: "semver:patch"
   - package_manager: "docker"
-    directory: "/"
+    directory: "server"
     target_branch: dev
     update_schedule: weekly
     default_reviewers:
