@@ -38,7 +38,7 @@
     "prettier": "^1.19.1",
     "superagent": "^5.2.2",
     "ts-mocha": "^7.0.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.6"
   },
   "dependencies": {
     "@byu-oit/env-ssm": "^2.1.0",
