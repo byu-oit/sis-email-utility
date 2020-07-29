@@ -16,10 +16,13 @@ export async function newMessage(req: Request & { verifiedJWTs: DecodedByuJwt })
     email: `${claims.netId}@byu.edu`
   }
 
-  const {to = [], cc = [], bcc = [], subject = '', body = ''} = req.body as NewMessageBody
+  const {to = [], cc = [], bcc = [], subject = '', body = '', noReply = false} = req.body as NewMessageBody
   if (!to.length && !cc.length && !bcc.length) errors.push('Requires at least one of: to, cc, bcc.')
   if (subject==='') errors.push('Required: subject is a non-empty string.')
   if (body==='') errors.push('Required: body is a non-empty string.')
+  if(noReply){
+    sender.email = 'sis-noreply@byu.edu'
+  }
 
   // Send email only to sender if in stg environment
   const {HANDEL_ENVIRONMENT_NAME: env} = await getParams(['HANDEL_ENVIRONMENT_NAME'], {prefix: 'HANDEL_PARAMETER_STORE_PREFIX'})
