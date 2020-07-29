@@ -1,5 +1,5 @@
 /*eslint @typescript-eslint/camelcase: ["error", {allow: ["status_by_id", "status_datetime", "status_information"]}]*/
-import uuid from 'uuid'
+import {v4 as uuid} from 'uuid'
 import {send} from './aws/ses'
 import {storeMessage} from './aws/s3'
 import {Message} from './types'
