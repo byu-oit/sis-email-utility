@@ -22,6 +22,7 @@ export interface NewMessageBody {
   bcc?: string[]
   subject?: string
   body?: string
+  noReply?: boolean
 }
 
 export interface EventMessage {
