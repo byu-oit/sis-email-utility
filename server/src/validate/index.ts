@@ -22,8 +22,6 @@ export async function newMessage(req: Request & { verifiedJWTs: DecodedByuJwt })
   if (body==='') errors.push('Required: body is a non-empty string.')
   if(noReply){
     sender.email = 'sis-noreply@byu.edu'
-    sender.firstName = ''
-    sender.surname = ''
   }
 
   // Send email only to sender if in stg environment
